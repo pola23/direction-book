@@ -7,15 +7,17 @@
 // 'src/pages/HomePage/HomePage.js'         -> HomePage
 // 'src/pages/Admin/BooksPage/BooksPage.js' -> AdminBooksPage
 
-import { Router, Route, Set } from '@redwoodjs/router'
+import { Router, Route, Set, Private } from '@redwoodjs/router'
 
 import NavLayout from './layouts/NavLayout/NavLayout'
 const Routes = () => {
   return (
     <Router>
       <Set wrap={NavLayout}>
-        <Route path="/add-direction" page={AddDirectionPage} name="addDirection" />
-        <Route path="/" page={HomePage} name="home" />
+        <Private unauthenticated="home">
+          <Route path="/add-direction" page={AddDirectionPage} name="addDirection" />
+          <Route path="/" page={HomePage} name="home" />
+        </Private>
       </Set>
 
       <Route notfound page={NotFoundPage} />
