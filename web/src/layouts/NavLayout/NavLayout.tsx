@@ -3,7 +3,17 @@ type NavLayoutProps = {
 }
 
 const NavLayout = ({ children }: NavLayoutProps) => {
-  return <>{children}</>
+  return (
+    <>
+      <header>Direction Book</header>
+      <nav>
+        <ul>
+          <li>Link</li>
+        </ul>
+      </nav>
+      <main>{children}</main>
+    </>
+  )
 }
 
 export default NavLayout
