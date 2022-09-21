@@ -16,7 +16,7 @@ export const feedback: QueryResolvers['feedback'] = ({ id }) => {
   })
 }
 
-export const createFeedback: MutationResolvers['createFeedback'] = ({
+export const createFeedback: MutationResolvers['createFeedback'] = async ({
   input,
 }) => {
   return db.feedback.create({

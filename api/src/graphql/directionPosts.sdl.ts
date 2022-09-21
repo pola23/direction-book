@@ -16,12 +16,10 @@ export const schema = gql`
 
   input CreateDirectionPostInput {
     userId: Int!
-    feedbackId: Int!
   }
 
   input UpdateDirectionPostInput {
     userId: Int
-    feedbackId: Int
   }
 
   type Mutation {
