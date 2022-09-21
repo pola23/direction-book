@@ -13,12 +13,17 @@ import NavLayout from './layouts/NavLayout/NavLayout'
 const Routes = () => {
   return (
     <Router>
-      <Set wrap={NavLayout}>
-        <Private unauthenticated="home">
+      <Route path="/login" page={LoginPage} name="login" />
+      <Route path="/signup" page={SignupPage} name="signup" />
+      <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
+      <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
+
+      <Private unauthenticated="login">
+        <Set wrap={NavLayout}>
           <Route path="/add-direction" page={AddDirectionPage} name="addDirection" />
           <Route path="/" page={HomePage} name="home" />
-        </Private>
-      </Set>
+        </Set>{' '}
+      </Private>
 
       <Route notfound page={NotFoundPage} />
     </Router>
