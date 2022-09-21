@@ -17,14 +17,12 @@ const Routes = () => {
       <Route path="/signup" page={SignupPage} name="signup" />
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
-
-      <Private unauthenticated="login">
-        <Set wrap={NavLayout}>
+      <Set wrap={NavLayout}>
+        <Private unauthenticated="login">
           <Route path="/add-direction" page={AddDirectionPage} name="addDirection" />
-          <Route path="/" page={HomePage} name="home" />
-        </Set>{' '}
-      </Private>
-
+        </Private>
+        <Route path="/" page={HomePage} name="home" />
+      </Set>{' '}
       <Route notfound page={NotFoundPage} />
     </Router>
   )
