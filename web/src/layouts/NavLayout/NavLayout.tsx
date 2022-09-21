@@ -13,7 +13,12 @@ const NavLayout = ({ children }: NavLayoutProps) => {
       <header>Direction Book</header>
       <nav>
         <ul>
-          <li>Link</li>
+          <li>
+            <Link to={routes.home()}>Home</Link>
+          </li>
+          <li>
+            <Link to={routes.addDirection()}>Add Direction</Link>
+          </li>
         </ul>
       </nav>
       <div>
