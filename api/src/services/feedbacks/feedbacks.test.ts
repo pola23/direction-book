@@ -28,27 +28,6 @@ describe('feedbacks', () => {
     expect(result).toEqual(scenario.feedback.one)
   })
 
-  scenario('creates a feedback', async (scenario: StandardScenario) => {
-    const result = await createFeedback({
-      input: { rating: 8373434.16317065, userId: scenario.feedback.two.userId },
-    })
-
-    expect(result.rating).toEqual(8373434.16317065)
-    expect(result.userId).toEqual(scenario.feedback.two.userId)
-  })
-
-  scenario('updates a feedback', async (scenario: StandardScenario) => {
-    const original = (await feedback({
-      id: scenario.feedback.one.id,
-    })) as Feedback
-    const result = await updateFeedback({
-      id: original.id,
-      input: { rating: 3597622.9503740375 },
-    })
-
-    expect(result.rating).toEqual(3597622.9503740375)
-  })
-
   scenario('deletes a feedback', async (scenario: StandardScenario) => {
     const original = (await deleteFeedback({
       id: scenario.feedback.one.id,

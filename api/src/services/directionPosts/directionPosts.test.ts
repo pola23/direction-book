@@ -49,10 +49,10 @@ describe('directionPosts', () => {
     })) as DirectionPost
     const result = await updateDirectionPost({
       id: original.id,
-      input: { feedbackId: scenario.directionPost.two.userId },
+      input: { userId: scenario.directionPost.two.userId },
     })
 
-    expect(result.feedbackId).toEqual(scenario.directionPost.two.userId)
+    expect(result.userId).toEqual(scenario.directionPost.two.userId)
   })
 
   scenario('deletes a directionPost', async (scenario: StandardScenario) => {

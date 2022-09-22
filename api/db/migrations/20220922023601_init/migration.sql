@@ -2,10 +2,10 @@
 CREATE TABLE "DirectionPost" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "userId" INTEGER NOT NULL,
-    "feedbackId" INTEGER NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "DirectionPost_feedbackId_fkey" FOREIGN KEY ("feedbackId") REFERENCES "Feedback" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "DirectionPost_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    "feedbackId" INTEGER NOT NULL,
+    CONSTRAINT "DirectionPost_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "DirectionPost_feedbackId_fkey" FOREIGN KEY ("feedbackId") REFERENCES "Feedback" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -22,9 +22,17 @@ CREATE TABLE "Information" (
 -- CreateTable
 CREATE TABLE "Feedback" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "rating" REAL NOT NULL,
+    "rating" REAL NOT NULL DEFAULT 0
+);
+
+-- CreateTable
+CREATE TABLE "Rate" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "feedbackId" INTEGER,
+    "rate" REAL NOT NULL DEFAULT 0,
     "userId" INTEGER NOT NULL,
-    CONSTRAINT "Feedback_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Rate_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Rate_feedbackId_fkey" FOREIGN KEY ("feedbackId") REFERENCES "Feedback" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -35,9 +43,11 @@ CREATE TABLE "User" (
     "hashedPassword" TEXT NOT NULL,
     "salt" TEXT NOT NULL,
     "resetToken" TEXT,
-    "resetTokenExpiresAt" DATETIME,
-    "feedbackId" INTEGER
+    "resetTokenExpiresAt" DATETIME
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "DirectionPost_feedbackId_key" ON "DirectionPost"("feedbackId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");

@@ -39,7 +39,7 @@ export const User: UserRelationResolvers = {
   directionPost: (_obj, { root }) => {
     return db.user.findUnique({ where: { id: root?.id } }).directionPost()
   },
-  feedback: (_obj, { root }) => {
-    return db.user.findUnique({ where: { id: root?.id } }).feedback()
+  Rate: (_obj, { root }) => {
+    return db.user.findUnique({ where: { id: root?.id } }).Rate()
   },
 }

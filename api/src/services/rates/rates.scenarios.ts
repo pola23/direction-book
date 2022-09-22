@@ -1,33 +1,31 @@
-import type { Prisma, DirectionPost } from '@prisma/client'
+import type { Prisma, Rate } from '@prisma/client'
 import type { ScenarioData } from '@redwoodjs/testing/api'
 
-export const standard = defineScenario<Prisma.DirectionPostCreateArgs>({
-  directionPost: {
+export const standard = defineScenario<Prisma.RateCreateArgs>({
+  rate: {
     one: {
       data: {
         user: {
           create: {
-            email: 'String6220360',
+            email: 'String530659',
             hashedPassword: 'String',
             salt: 'String',
           },
         },
-        feedback: { create: {} },
       },
     },
     two: {
       data: {
         user: {
           create: {
-            email: 'String9142965',
+            email: 'String741390',
             hashedPassword: 'String',
             salt: 'String',
           },
         },
-        feedback: { create: {} },
       },
     },
   },
 })
 
-export type StandardScenario = ScenarioData<DirectionPost, 'directionPost'>
+export type StandardScenario = ScenarioData<Rate, 'rate'>

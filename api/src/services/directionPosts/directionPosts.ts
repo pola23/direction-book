@@ -6,8 +6,6 @@ import type {
 
 import { db } from 'src/lib/db'
 
-import { createFeedback } from '../feedbacks/feedbacks'
-
 export const directionPosts: QueryResolvers['directionPosts'] = () => {
   return db.directionPost.findMany()
 }
@@ -18,13 +16,13 @@ export const directionPost: QueryResolvers['directionPost'] = ({ id }) => {
   })
 }
 
-export const createDirectionPost: MutationResolvers['createDirectionPost'] =
-  async ({ input }) => {
-    const f = await createFeedback({ input: { userId: input.userId } })
-    return db.directionPost.create({
-      data: { userId: input.userId, feedbackId: f.id },
-    })
-  }
+export const createDirectionPost: MutationResolvers['createDirectionPost'] = ({
+  input,
+}) => {
+  return db.directionPost.create({
+    data: input,
+  })
+}
 
 export const updateDirectionPost: MutationResolvers['updateDirectionPost'] = ({
   id,
@@ -45,9 +43,6 @@ export const deleteDirectionPost: MutationResolvers['deleteDirectionPost'] = ({
 }
 
 export const DirectionPost: DirectionPostRelationResolvers = {
-  Feedback: (_obj, { root }) => {
-    return db.directionPost.findUnique({ where: { id: root?.id } }).Feedback()
-  },
   user: (_obj, { root }) => {
     return db.directionPost.findUnique({ where: { id: root?.id } }).user()
   },
@@ -55,5 +50,8 @@ export const DirectionPost: DirectionPostRelationResolvers = {
     return db.directionPost
       .findUnique({ where: { id: root?.id } })
       .informations()
+  },
+  feedback: (_obj, { root }) => {
+    return db.directionPost.findUnique({ where: { id: root?.id } }).feedback()
   },
 }

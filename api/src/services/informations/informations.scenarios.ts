@@ -7,25 +7,14 @@ export const standard = defineScenario<Prisma.InformationCreateArgs>({
       data: {
         directionPost: {
           create: {
-            Feedback: {
-              create: {
-                rating: 5710036.671136682,
-                user: {
-                  create: {
-                    email: 'String8306678',
-                    hashedPassword: 'String',
-                    salt: 'String',
-                  },
-                },
-              },
-            },
             user: {
               create: {
-                email: 'String9521851',
+                email: 'String1680840',
                 hashedPassword: 'String',
                 salt: 'String',
               },
             },
+            feedback: { create: {} },
           },
         },
       },
@@ -34,25 +23,14 @@ export const standard = defineScenario<Prisma.InformationCreateArgs>({
       data: {
         directionPost: {
           create: {
-            Feedback: {
-              create: {
-                rating: 9210286.585471364,
-                user: {
-                  create: {
-                    email: 'String8106104',
-                    hashedPassword: 'String',
-                    salt: 'String',
-                  },
-                },
-              },
-            },
             user: {
               create: {
-                email: 'String8444900',
+                email: 'String9598670',
                 hashedPassword: 'String',
                 salt: 'String',
               },
             },
+            feedback: { create: {} },
           },
         },
       },

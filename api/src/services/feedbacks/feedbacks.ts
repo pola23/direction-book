@@ -16,7 +16,7 @@ export const feedback: QueryResolvers['feedback'] = ({ id }) => {
   })
 }
 
-export const createFeedback: MutationResolvers['createFeedback'] = async ({
+export const createFeedback: MutationResolvers['createFeedback'] = ({
   input,
 }) => {
   return db.feedback.create({
@@ -41,10 +41,10 @@ export const deleteFeedback: MutationResolvers['deleteFeedback'] = ({ id }) => {
 }
 
 export const Feedback: FeedbackRelationResolvers = {
-  user: (_obj, { root }) => {
-    return db.feedback.findUnique({ where: { id: root?.id } }).user()
+  rates: (_obj, { root }) => {
+    return db.feedback.findUnique({ where: { id: root?.id } }).rates()
   },
-  DirectionPost: (_obj, { root }) => {
-    return db.feedback.findUnique({ where: { id: root?.id } }).DirectionPost()
+  directionPost: (_obj, { root }) => {
+    return db.feedback.findUnique({ where: { id: root?.id } }).directionPost()
   },
 }

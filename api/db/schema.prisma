@@ -11,11 +11,11 @@ generator client {
 model DirectionPost {
   id           Int           @id @default(autoincrement())
   userId       Int
-  feedbackId   Int
-  createdAt    DateTime      @default(now())
-  Feedback     Feedback      @relation(fields: [feedbackId], references: [id])
   user         User          @relation(fields: [userId], references: [id])
+  createdAt    DateTime      @default(now())
   informations Information[]
+  feedbackId   Int           @unique
+  feedback     Feedback      @relation(fields: [feedbackId], references: [id])
 }
 
 model Information {
@@ -29,11 +29,19 @@ model Information {
 }
 
 model Feedback {
-  id            Int             @id @default(autoincrement())
-  rating        Float           @default(0)
-  userId        Int
-  user          User            @relation(fields: [userId], references: [id])
-  DirectionPost DirectionPost[]
+  id            Int            @id @default(autoincrement())
+  rating        Float          @default(0)
+  rates         Rate[]
+  directionPost DirectionPost?
+}
+
+model Rate {
+  id         Int       @id @default(autoincrement())
+  feedbackId Int?
+  rate       Float     @default(0)
+  userId     Int
+  user       User      @relation(fields: [userId], references: [id])
+  feedback   Feedback? @relation(fields: [feedbackId], references: [id])
 }
 
 model User {
@@ -44,7 +52,6 @@ model User {
   salt                String
   resetToken          String?
   resetTokenExpiresAt DateTime?
-  feedbackId          Int?
   directionPost       DirectionPost[]
-  feedback            Feedback[]
+  Rate                Rate[]
 }
