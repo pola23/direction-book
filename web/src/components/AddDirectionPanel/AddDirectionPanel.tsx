@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { useAuth } from '@redwoodjs/auth'
 import { useMutation } from '@redwoodjs/web'
 
+import Information from '../Information/Information'
+
 const CREATE_DIRECTION_POST = gql`
   mutation CreateDirectionPost($input: CreateDirectionPostInput!) {
     createDirectionPost(input: $input) {
@@ -60,7 +62,7 @@ const AddDirectionPanel = () => {
       <ul>
         {infoList.map((info) => (
           <li key={info.listId}>
-            {info.listId} - {JSON.stringify(info)}
+            <Information info={info} updateInfoValues={UpdateInfoValues} />
           </li>
         ))}
       </ul>
@@ -68,7 +70,6 @@ const AddDirectionPanel = () => {
       <button
         onClick={() => {
           AddNewInfo()
-          console.log(infoList)
         }}
       >
         Add Information
@@ -85,6 +86,14 @@ const AddDirectionPanel = () => {
         }}
       >
         Update Last Info
+      </button>
+
+      <button
+        onClick={() => {
+          console.log(infoList)
+        }}
+      >
+        GET INFOS
       </button>
       <button
         onClick={() => {
