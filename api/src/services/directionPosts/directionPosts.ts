@@ -6,6 +6,8 @@ import type {
 
 import { db } from 'src/lib/db'
 
+import { createFeedback } from '../feedbacks/feedbacks'
+
 export const directionPosts: QueryResolvers['directionPosts'] = () => {
   return db.directionPost.findMany()
 }
@@ -16,13 +18,13 @@ export const directionPost: QueryResolvers['directionPost'] = ({ id }) => {
   })
 }
 
-export const createDirectionPost: MutationResolvers['createDirectionPost'] = ({
-  input,
-}) => {
-  return db.directionPost.create({
-    data: input,
-  })
-}
+export const createDirectionPost: MutationResolvers['createDirectionPost'] =
+  async ({ input }) => {
+    const f = await createFeedback({ input: { rating: 0 } })
+    return db.directionPost.create({
+      data: { userId: input.userId, feedbackId: f.id },
+    })
+  }
 
 export const updateDirectionPost: MutationResolvers['updateDirectionPost'] = ({
   id,

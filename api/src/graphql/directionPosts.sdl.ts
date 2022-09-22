@@ -16,7 +16,6 @@ export const schema = gql`
 
   input CreateDirectionPostInput {
     userId: Int!
-    feedbackId: Int!
   }
 
   input UpdateDirectionPostInput {
