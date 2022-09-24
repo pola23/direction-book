@@ -41,18 +41,20 @@ const AddDirectionPanel = () => {
     setInfoList([...infoList, newInfo])
   }
 
-  const UpdateInfoValues = (updatedInfo: infoType) => {
-    const index = infoList
-      .map((info_) => info_.listId)
-      .indexOf(updatedInfo.listId)
+  const UpdateInfoValues = useCallback((updatedInfo: infoType) => {
     setInfoList((currInfos) => {
-      return [
+      const index = currInfos
+        .map((info_) => info_.listId)
+        .indexOf(updatedInfo.listId)
+      const newInfoList = [
         ...currInfos.slice(0, index),
         updatedInfo,
         ...currInfos.slice(index + 1),
       ]
+      console.log(newInfoList)
+      return newInfoList
     })
-  }
+  }, [])
 
   if (loading) return 'Submitting...'
   if (error) return `Submission error! ${error.message}`

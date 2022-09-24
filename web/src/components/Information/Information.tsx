@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 type infoType = {
   listId: number
@@ -19,17 +19,19 @@ const Information = ({ info, updateInfoValues }: propType) => {
   const [imageUrl, setImageUrl] = useState(info.imageUrl)
   const [location, setLocation] = useState(info.location)
 
-  const passDownValues = () => {
-    const updatedInfo = {
+  const updatedInfo = useMemo(() => {
+    return {
       listId: info.listId,
       title: title,
       description: description,
       imageUrl: imageUrl,
       location: location,
     }
+  }, [description, imageUrl, info.listId, location, title])
 
+  useEffect(() => {
     updateInfoValues(updatedInfo)
-  }
+  }, [updateInfoValues, updatedInfo])
 
   return (
     <div style={{ padding: '1rem' }}>
@@ -40,7 +42,7 @@ const Information = ({ info, updateInfoValues }: propType) => {
           value={title}
           onChange={(e) => {
             setTitle(e.target.value)
-            passDownValues()
+            // passDownValues()
           }}
         />
         <br />
@@ -50,7 +52,7 @@ const Information = ({ info, updateInfoValues }: propType) => {
           value={description}
           onChange={(e) => {
             setDescription(e.target.value)
-            passDownValues()
+            // passDownValues()
           }}
         />
         <br />
@@ -60,7 +62,7 @@ const Information = ({ info, updateInfoValues }: propType) => {
           value={imageUrl}
           onChange={(e) => {
             setImageUrl(e.target.value)
-            passDownValues()
+            // passDownValues()
           }}
         />
         <br />
@@ -70,7 +72,7 @@ const Information = ({ info, updateInfoValues }: propType) => {
           value={location}
           onChange={(e) => {
             setLocation(e.target.value)
-            passDownValues()
+            // passDownValues()
           }}
         />
         <br />
