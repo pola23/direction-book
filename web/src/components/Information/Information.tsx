@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 type infoType = {
   listId: number
@@ -13,55 +13,64 @@ type propType = {
   updateInfoValues: (updatedInfo: infoType) => void
 }
 
-const Information = (props: propType) => {
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [imageUrl, setImageUrl] = useState('')
-  const [location, setLocation] = useState('')
+const Information = ({ info, updateInfoValues }: propType) => {
+  const [title, setTitle] = useState(info.title)
+  const [description, setDescription] = useState(info.description)
+  const [imageUrl, setImageUrl] = useState(info.imageUrl)
+  const [location, setLocation] = useState(info.location)
 
-  useEffect(() => {
-    const updatedInfo: infoType = {
-      listId: props.info.listId,
+  const passDownValues = () => {
+    const updatedInfo = {
+      listId: info.listId,
       title: title,
       description: description,
       imageUrl: imageUrl,
       location: location,
     }
-    props.updateInfoValues(updatedInfo)
-  })
+
+    updateInfoValues(updatedInfo)
+  }
+
   return (
     <div style={{ padding: '1rem' }}>
-      {/* <p>{JSON.stringify(props.info)}</p> */}
       <form>
         <input
           type="text"
           id="title"
+          value={title}
           onChange={(e) => {
             setTitle(e.target.value)
+            passDownValues()
           }}
         />
         <br />
         <input
           type="text"
           id="description"
+          value={description}
           onChange={(e) => {
             setDescription(e.target.value)
+            passDownValues()
           }}
         />
         <br />
         <input
           type="text"
           id="imageUrl"
+          value={imageUrl}
           onChange={(e) => {
             setImageUrl(e.target.value)
+            passDownValues()
           }}
         />
         <br />
         <input
           type="text"
           id="location"
+          value={location}
           onChange={(e) => {
             setLocation(e.target.value)
+            passDownValues()
           }}
         />
         <br />

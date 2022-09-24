@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { useAuth } from '@redwoodjs/auth'
 import { useMutation } from '@redwoodjs/web'
@@ -45,11 +45,11 @@ const AddDirectionPanel = () => {
     const index = infoList
       .map((info_) => info_.listId)
       .indexOf(updatedInfo.listId)
-    setInfoList((currInfo) => {
+    setInfoList((currInfos) => {
       return [
-        ...currInfo.slice(0, index),
+        ...currInfos.slice(0, index),
         updatedInfo,
-        ...currInfo.slice(index + 1),
+        ...currInfos.slice(index + 1),
       ]
     })
   }
@@ -74,27 +74,15 @@ const AddDirectionPanel = () => {
       >
         Add Information
       </button>
-      <button
-        onClick={() => {
-          UpdateInfoValues({
-            listId: infoList.length - 1,
-            title: 'UPDATE',
-            description: 'UPDATE',
-            imageUrl: 'UPDATE',
-            location: 'UPDATE',
-          })
-        }}
-      >
-        Update Last Info
-      </button>
 
       <button
         onClick={() => {
-          console.log(infoList)
+          console.log('INFO', infoList)
         }}
       >
         GET INFOS
       </button>
+
       <button
         onClick={() => {
           addDirectionPost({ variables: { input: { userId: currentUser.id } } })
