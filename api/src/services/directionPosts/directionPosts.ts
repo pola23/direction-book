@@ -25,6 +25,9 @@ export const createDirectionPost: MutationResolvers['createDirectionPost'] =
       data: {
         userId: input.userId,
         totalFare: input.totalFare,
+        locationA: input.locationA,
+        locationB: input.locationB,
+        description: input.description,
         feedbackId: f.id,
       },
     })

@@ -42,6 +42,9 @@ const AddDirectionPanel = () => {
   const [infoList, setInfoList] = useState<infoType[]>([])
   const [infoId, setInfoId] = useState<number>(0)
 
+  const [locationA, setLocationA] = useState<string>('anywhere')
+  const [locationB, setLocationB] = useState<string>('anywhere')
+  const [description, setDescription] = useState<string>('')
   const AddNewInfo = () => {
     const newInfo: infoType = {
       listId: infoId,
@@ -86,9 +89,39 @@ const AddDirectionPanel = () => {
 
   return (
     <div>
+      <input
+        type="text"
+        id="locationA"
+        defaultValue={locationA}
+        placeholder="Location A"
+        onChange={(e) => {
+          setLocationA(e.target.value)
+        }}
+      />
+      <input
+        type="text"
+        id="locationB"
+        defaultValue={locationB}
+        placeholder="Location B"
+        onChange={(e) => {
+          setLocationB(e.target.value)
+        }}
+      />
+      <br />
+      <textarea
+        id="description"
+        placeholder="Description"
+        cols={40}
+        rows={5}
+        onChange={(e) => {
+          setDescription(e.target.value)
+        }}
+      />
+      <br />
       <button
         onClick={() => {
           console.log(infoList)
+          console.log(locationA, locationB, description)
         }}
       >
         Get INFOS
@@ -116,7 +149,15 @@ const AddDirectionPanel = () => {
       <button
         onClick={async () => {
           const dirPost = await addDirectionPost({
-            variables: { input: { userId: currentUser.id, totalFare: 100 } },
+            variables: {
+              input: {
+                userId: currentUser.id,
+                totalFare: 100,
+                locationA: locationA,
+                locationB: locationB,
+                description: description,
+              },
+            },
           })
           await Promise.all(
             infoList.map((e) =>

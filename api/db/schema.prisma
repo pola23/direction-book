@@ -17,6 +17,9 @@ model DirectionPost {
   feedbackId   Int           @unique
   feedback     Feedback      @relation(fields: [feedbackId], references: [id])
   totalFare    Float         @default(0)
+  locationA    String        @default("anywhere")
+  locationB    String        @default("anywhere")
+  description  String?
 }
 
 model Information {

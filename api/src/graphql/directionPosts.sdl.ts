@@ -8,6 +8,9 @@ export const schema = gql`
     feedbackId: Int!
     feedback: Feedback!
     totalFare: Float!
+    locationA: String!
+    locationB: String!
+    description: String
   }
 
   type Query {
@@ -18,6 +21,9 @@ export const schema = gql`
   input CreateDirectionPostInput {
     userId: Int!
     totalFare: Float!
+    locationA: String!
+    locationB: String!
+    description: String
   }
 
   input UpdateDirectionPostInput {
