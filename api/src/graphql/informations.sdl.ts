@@ -7,6 +7,7 @@ export const schema = gql`
     imageUrl: String
     location: String
     directionPost: DirectionPost!
+    fare: Float!
   }
 
   type Query {

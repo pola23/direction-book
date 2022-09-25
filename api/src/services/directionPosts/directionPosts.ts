@@ -22,7 +22,11 @@ export const createDirectionPost: MutationResolvers['createDirectionPost'] =
   async ({ input }) => {
     const f = await createFeedback({ input: { rating: 0 } })
     return db.directionPost.create({
-      data: { userId: input.userId, feedbackId: f.id },
+      data: {
+        userId: input.userId,
+        totalFare: input.totalFare,
+        feedbackId: f.id,
+      },
     })
   }
 

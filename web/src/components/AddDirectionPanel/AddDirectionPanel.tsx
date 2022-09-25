@@ -87,7 +87,9 @@ const AddDirectionPanel = () => {
 
       <button
         onClick={() => {
-          addDirectionPost({ variables: { input: { userId: currentUser.id } } })
+          addDirectionPost({
+            variables: { input: { userId: currentUser.id, totalFare: 100 } },
+          })
         }}
       >
         SUBMIT
