@@ -21,6 +21,7 @@ export const schema = gql`
     description: String
     imageUrl: String
     location: String
+    fare: Float
   }
 
   input UpdateInformationInput {
@@ -32,7 +33,7 @@ export const schema = gql`
   }
 
   type Mutation {
-    createInformation(input: CreateInformationInput!): Information! @requireAuth
+    createInformation(input: CreateInformationInput!): Information! @skipAuth
     updateInformation(id: Int!, input: UpdateInformationInput!): Information!
       @requireAuth
     deleteInformation(id: Int!): Information! @requireAuth

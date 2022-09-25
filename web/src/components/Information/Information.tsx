@@ -6,6 +6,7 @@ type infoType = {
   description: string
   imageUrl: string
   location: string
+  fare: number // let string just for input functionality
 }
 
 type propType = {
@@ -18,6 +19,7 @@ const Information = ({ info, updateInfoValues }: propType) => {
   const [description, setDescription] = useState(info.description)
   const [imageUrl, setImageUrl] = useState(info.imageUrl)
   const [location, setLocation] = useState(info.location)
+  const [fare, setFare] = useState(info.fare)
 
   const updatedInfo = useMemo(() => {
     return {
@@ -26,8 +28,9 @@ const Information = ({ info, updateInfoValues }: propType) => {
       description: description,
       imageUrl: imageUrl,
       location: location,
+      fare: fare,
     }
-  }, [description, imageUrl, info.listId, location, title])
+  }, [description, fare, imageUrl, info.listId, location, title])
 
   useEffect(() => {
     updateInfoValues(updatedInfo)
@@ -40,29 +43,30 @@ const Information = ({ info, updateInfoValues }: propType) => {
           type="text"
           id="title"
           value={title}
+          placeholder="Title"
           onChange={(e) => {
             setTitle(e.target.value)
-            // passDownValues()
           }}
         />
         <br />
-        <input
-          type="text"
+        <textarea
           id="description"
           value={description}
+          placeholder="Description"
           onChange={(e) => {
             setDescription(e.target.value)
-            // passDownValues()
           }}
+          cols={40}
+          rows={5}
         />
         <br />
         <input
           type="text"
           id="imageUrl"
           value={imageUrl}
+          placeholder="Image URL"
           onChange={(e) => {
             setImageUrl(e.target.value)
-            // passDownValues()
           }}
         />
         <br />
@@ -70,9 +74,19 @@ const Information = ({ info, updateInfoValues }: propType) => {
           type="text"
           id="location"
           value={location}
+          placeholder="Location"
           onChange={(e) => {
             setLocation(e.target.value)
-            // passDownValues()
+          }}
+        />
+        <br />
+        <input
+          type="text"
+          id="fare"
+          value={fare}
+          placeholder="Fare Price"
+          onChange={(e) => {
+            setFare(+e.target.value)
           }}
         />
         <br />
