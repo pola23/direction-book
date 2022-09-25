@@ -12,9 +12,10 @@ type infoType = {
 type propType = {
   info: infoType
   updateInfoValues: (updatedInfo: infoType) => void
+  deleteInfo: (listId: number) => void
 }
 
-const Information = ({ info, updateInfoValues }: propType) => {
+const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
   const [title, setTitle] = useState(info.title)
   const [description, setDescription] = useState(info.description)
   const [imageUrl, setImageUrl] = useState(info.imageUrl)
@@ -38,6 +39,7 @@ const Information = ({ info, updateInfoValues }: propType) => {
 
   return (
     <div style={{ padding: '1rem' }}>
+      <button onClick={() => deleteInfo(info.listId)}>Delete</button>
       <form>
         <input
           type="text"

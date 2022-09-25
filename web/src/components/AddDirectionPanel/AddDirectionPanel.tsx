@@ -40,17 +40,18 @@ const AddDirectionPanel = () => {
   const [addInformation, AddInformationState] = useMutation(CREATE_INFORMATION)
 
   const [infoList, setInfoList] = useState<infoType[]>([])
+  const [infoId, setInfoId] = useState<number>(0)
 
   const AddNewInfo = () => {
     const newInfo: infoType = {
-      listId: infoList.length,
+      listId: infoId,
       title: '',
       description: '',
       imageUrl: '',
       location: '',
       fare: 0,
     }
-
+    setInfoId((curr) => curr + 1)
     setInfoList([...infoList, newInfo])
   }
 
@@ -68,6 +69,13 @@ const AddDirectionPanel = () => {
     })
   }, [])
 
+  const deleteInfo = (listId: number) => {
+    setInfoList((currInfos) => {
+      const index = currInfos.map((info_) => info_.listId).indexOf(listId)
+      return [...currInfos.slice(0, index), ...currInfos.slice(index + 1)]
+    })
+  }
+
   if (AddDirectionState.loading) return 'Submitting...'
   if (AddDirectionState.error)
     return `Submission error! ${AddDirectionState.error.message}`
@@ -78,10 +86,21 @@ const AddDirectionPanel = () => {
 
   return (
     <div>
+      <button
+        onClick={() => {
+          console.log(infoList)
+        }}
+      >
+        Get INFOS
+      </button>
       <ul>
         {infoList.map((info) => (
           <li key={info.listId}>
-            <Information info={info} updateInfoValues={UpdateInfoValues} />
+            <Information
+              info={info}
+              updateInfoValues={UpdateInfoValues}
+              deleteInfo={deleteInfo}
+            />
           </li>
         ))}
       </ul>
