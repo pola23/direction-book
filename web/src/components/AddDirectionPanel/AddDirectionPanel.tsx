@@ -40,7 +40,6 @@ const AddDirectionPanel = () => {
   const [addInformation, AddInformationState] = useMutation(CREATE_INFORMATION)
 
   const [infoList, setInfoList] = useState<infoType[]>([])
-  // const [disableSubmit, setDisableSubmit] = useState<boolean>(false)
 
   const AddNewInfo = () => {
     const newInfo: infoType = {
@@ -56,7 +55,6 @@ const AddDirectionPanel = () => {
   }
 
   const UpdateInfoValues = useCallback((updatedInfo: infoType) => {
-    // setDisableSubmit(isNaN(+updatedInfo.fare))
     setInfoList((currInfos) => {
       const index = currInfos
         .map((info_) => info_.listId)
@@ -95,16 +93,8 @@ const AddDirectionPanel = () => {
       >
         Add Information
       </button>
-      <button
-        onClick={() => {
-          console.log('INFO', infoList)
-        }}
-      >
-        GET INFOS
-      </button>
 
       <button
-        // disabled={disableSubmit}
         onClick={async () => {
           const dirPost = await addDirectionPost({
             variables: { input: { userId: currentUser.id, totalFare: 100 } },
