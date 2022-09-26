@@ -175,7 +175,9 @@ const AddDirectionPanel = () => {
               })
             )
           )
-          navigate(routes.home())
+          navigate(
+            routes.direction({ id: dirPost.data.createDirectionPost.id })
+          )
         }}
       >
         SUBMIT

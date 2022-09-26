@@ -22,6 +22,7 @@ const Routes = () => {
           <Route path="/add-direction" page={AddDirectionPage} name="addDirection" />
         </Private>
         <Route path="/" page={HomePage} name="home" />
+        <Route path="/direction/{id:Int}" page={DirectionPage} name="direction" />
       </Set>{' '}
       <Route notfound page={NotFoundPage} />
     </Router>
