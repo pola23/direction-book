@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { useAuth } from '@redwoodjs/auth'
 import { navigate, routes } from '@redwoodjs/router'
@@ -29,6 +29,7 @@ type infoType = {
   imageUrl: string
   location: string
   fare: number
+  canBeDeleted: boolean
 }
 
 const AddDirectionPanel = () => {
@@ -39,23 +40,55 @@ const AddDirectionPanel = () => {
 
   const [addInformation, AddInformationState] = useMutation(CREATE_INFORMATION)
 
-  const [infoList, setInfoList] = useState<infoType[]>([])
-  const [infoId, setInfoId] = useState<number>(0)
+  const [infoId, setInfoId] = useState<number>(2)
 
   const [locationA, setLocationA] = useState<string>('anywhere')
   const [locationB, setLocationB] = useState<string>('anywhere')
-  const [description, setDescription] = useState<string>('')
-  const AddNewInfo = () => {
-    const newInfo: infoType = {
-      listId: infoId,
-      title: '',
+
+  const [infoList, setInfoList] = useState<infoType[]>([
+    {
+      listId: 0,
+      title: 'Destination A',
       description: '',
       imageUrl: '',
-      location: '',
+      location: locationA,
       fare: 0,
+      canBeDeleted: false,
+    },
+    {
+      listId: 1,
+      title: 'Destination B',
+      description: '',
+      imageUrl: '',
+      location: locationB,
+      fare: 0,
+      canBeDeleted: false,
+    },
+  ])
+  const [description, setDescription] = useState<string>('')
+
+  const AddNewInfo = ({
+    title = '',
+    description = '',
+    imageUrl = '',
+    location = '',
+    fare = 0,
+    canBeDeleted = true,
+  }) => {
+    const newInfo: infoType = {
+      listId: infoId,
+      title: title,
+      description: description,
+      imageUrl: imageUrl,
+      location: location,
+      fare: fare,
+      canBeDeleted: canBeDeleted,
     }
     setInfoId((curr) => curr + 1)
-    setInfoList([...infoList, newInfo])
+    setInfoList((currInfo) => {
+      const index = currInfo.length - 1
+      return [...currInfo.slice(0, index), newInfo, ...currInfo.slice(index)]
+    })
   }
 
   const UpdateInfoValues = useCallback((updatedInfo: infoType) => {
@@ -140,7 +173,7 @@ const AddDirectionPanel = () => {
 
       <button
         onClick={() => {
-          AddNewInfo()
+          AddNewInfo({})
         }}
       >
         Add Information

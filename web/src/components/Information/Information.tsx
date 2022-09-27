@@ -6,7 +6,8 @@ type infoType = {
   description: string
   imageUrl: string
   location: string
-  fare: number // let string just for input functionality
+  fare: number
+  canBeDeleted: boolean
 }
 
 type propType = {
@@ -30,8 +31,17 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
       imageUrl: imageUrl,
       location: location,
       fare: fare,
+      canBeDeleted: info.canBeDeleted,
     }
-  }, [description, fare, imageUrl, info.listId, location, title])
+  }, [
+    description,
+    fare,
+    imageUrl,
+    info.canBeDeleted,
+    info.listId,
+    location,
+    title,
+  ])
 
   useEffect(() => {
     updateInfoValues(updatedInfo)
@@ -39,7 +49,11 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
 
   return (
     <div style={{ padding: '1rem' }}>
-      <button onClick={() => deleteInfo(info.listId)}>Delete</button>
+      {info.canBeDeleted ? (
+        <button onClick={() => deleteInfo(info.listId)}>Delete</button>
+      ) : (
+        <></>
+      )}
       <form>
         <input
           type="text"
