@@ -112,6 +112,16 @@ const AddDirectionPanel = () => {
     })
   }
 
+  useEffect(() => {
+    setInfoList((currInfo) => {
+      return [
+        { ...currInfo[0], location: locationA },
+        ...currInfo.slice(1, currInfo.length - 1),
+        { ...currInfo[currInfo.length - 1], location: locationB },
+      ]
+    })
+  }, [locationA, locationB])
+
   if (AddDirectionState.loading) return 'Submitting...'
   if (AddDirectionState.error)
     return `Submission error! ${AddDirectionState.error.message}`

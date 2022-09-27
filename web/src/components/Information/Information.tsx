@@ -20,7 +20,7 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
   const [title, setTitle] = useState(info.title)
   const [description, setDescription] = useState(info.description)
   const [imageUrl, setImageUrl] = useState(info.imageUrl)
-  const [location, setLocation] = useState(info.location)
+  // const [location, setLocation] = useState(info.location)
   const [fare, setFare] = useState(info.fare)
 
   const updatedInfo = useMemo(() => {
@@ -29,7 +29,7 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
       title: title,
       description: description,
       imageUrl: imageUrl,
-      location: location,
+      location: info.location,
       fare: fare,
       canBeDeleted: info.canBeDeleted,
     }
@@ -39,7 +39,7 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
     imageUrl,
     info.canBeDeleted,
     info.listId,
-    location,
+    info.location,
     title,
   ])
 
@@ -87,17 +87,18 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
         />
         <br />
         <input
+          disabled={!info.canBeDeleted}
           type="text"
           id="location"
-          value={location}
+          value={info.location}
           placeholder="Location"
-          onChange={(e) => {
-            setLocation(e.target.value)
-          }}
+          // onChange={(e) => {
+          //   setLocation(e.target.value)
+          // }}
         />
         <br />
         <input
-          type="text"
+          type="number"
           id="fare"
           value={fare}
           placeholder="Fare Price"
