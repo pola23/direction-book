@@ -12,6 +12,16 @@ export const directionPosts: QueryResolvers['directionPosts'] = () => {
   return db.directionPost.findMany()
 }
 
+export const directionPostsProfile: QueryResolvers['directionPostsProfile'] = ({
+  id,
+}) => {
+  return db.directionPost.findMany({
+    where: {
+      userId: id,
+    },
+  })
+}
+
 export const directionPost: QueryResolvers['directionPost'] = ({ id }) => {
   return db.directionPost.findUnique({
     where: { id },

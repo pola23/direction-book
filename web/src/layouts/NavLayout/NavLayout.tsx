@@ -19,6 +19,15 @@ const NavLayout = ({ children }: NavLayoutProps) => {
           <li>
             <Link to={routes.addDirection()}>Add Direction</Link>
           </li>
+          {isAuthenticated ? (
+            <>
+              <li>
+                <Link to={routes.profile({ id: currentUser.id })}>Profile</Link>
+              </li>
+            </>
+          ) : (
+            <></>
+          )}
         </ul>
       </nav>
       <div>
