@@ -17,6 +17,10 @@ export const QUERY = gql`
       }
       informations {
         id
+        title
+        description
+        imageUrl
+        location
         fare
       }
     }
@@ -36,5 +40,5 @@ export const Failure = ({
 export const Success = ({
   directionPost,
 }: CellSuccessProps<FindPostQuery, FindPostQueryVariables>) => {
-  return <Post dirPost={directionPost} />
+  return <Post dirPost={directionPost} showInfo={true} />
 }

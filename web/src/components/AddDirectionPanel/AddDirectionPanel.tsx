@@ -222,7 +222,9 @@ const AddDirectionPanel = () => {
             )
           )
           navigate(
-            routes.direction({ id: dirPost.data.createDirectionPost.id })
+            routes.direction({
+              id: dirPost.data.createDirectionPost.id,
+            })
           )
         }}
       >

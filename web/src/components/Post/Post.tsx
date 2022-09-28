@@ -1,4 +1,6 @@
-const Post = ({ dirPost }) => {
+import PostInformation from '../PostInformation/PostInformation'
+
+const Post = ({ dirPost, showInfo }) => {
   const len = dirPost.informations.length - 2
   return (
     <div>
@@ -11,7 +13,18 @@ const Post = ({ dirPost }) => {
       <p>
         {len} Step{len > 1 ? 's' : ''}
       </p>
-      <p>{JSON.stringify(dirPost)}</p>
+
+      {showInfo ? (
+        <ul>
+          {dirPost.informations.map((info) => (
+            <li key={info.id}>
+              <PostInformation info={info} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <></>
+      )}
     </div>
   )
 }
