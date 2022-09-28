@@ -17,6 +17,7 @@ export const QUERY = gql`
       }
       informations {
         id
+        fare
       }
     }
   }

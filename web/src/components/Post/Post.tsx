@@ -1,4 +1,5 @@
 const Post = ({ dirPost }) => {
+  const len = dirPost.informations.length - 2
   return (
     <div>
       <h3>{dirPost.user.email}</h3>
@@ -7,7 +8,9 @@ const Post = ({ dirPost }) => {
       </p>
       <p>Total Fare: ₱ {dirPost.totalFare}</p>
       <p>Description: {dirPost.description}</p>
-      <p>{dirPost.informations.length} Steps</p>
+      <p>
+        {len} Step{len > 1 ? 's' : ''}
+      </p>
       <p>{JSON.stringify(dirPost)}</p>
     </div>
   )

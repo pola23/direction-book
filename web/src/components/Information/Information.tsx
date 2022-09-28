@@ -86,16 +86,7 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
           }}
         />
         <br />
-        <input
-          disabled={!info.canBeDeleted}
-          type="text"
-          id="location"
-          value={info.location}
-          placeholder="Location"
-          // onChange={(e) => {
-          //   setLocation(e.target.value)
-          // }}
-        />
+        <label>Loc: {info.location}</label>
         <br />
         <input
           type="number"

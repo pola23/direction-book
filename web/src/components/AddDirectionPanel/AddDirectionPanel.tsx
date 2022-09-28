@@ -190,12 +190,15 @@ const AddDirectionPanel = () => {
       </button>
 
       <button
+        disabled={infoList.length <= 2}
         onClick={async () => {
           const dirPost = await addDirectionPost({
             variables: {
               input: {
                 userId: currentUser.id,
-                totalFare: 100,
+                totalFare: infoList
+                  .map((i) => i.fare)
+                  .reduce((a, b) => a + b, 0),
                 locationA: locationA,
                 locationB: locationB,
                 description: description,
