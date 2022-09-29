@@ -15,6 +15,7 @@ export const QUERY = gql`
       locationA
       locationB
       description
+      userId
       user {
         email
       }
@@ -52,6 +53,7 @@ export const Success = ({
               dirPost={{
                 id: p.id,
                 user: p.user,
+                userId: p.userId,
                 locationA: p.locationA,
                 locationB: p.locationB,
                 totalFare: p.totalFare,
