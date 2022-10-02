@@ -13,6 +13,7 @@ export const QUERY = gql`
       locationB
       description
       user {
+        id
         email
       }
       informations {

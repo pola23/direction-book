@@ -1,4 +1,5 @@
 import { useAuth } from '@redwoodjs/auth'
+import { Link, navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
 import PostInformation from '../PostInformation/PostInformation'
@@ -11,7 +12,15 @@ const DELETE_POST = gql`
   }
 `
 
-const Post = ({ dirPost, showInfo, profileQuery }) => {
+const Post = ({
+  dirPost,
+  showInfo,
+  profileQuery,
+}: {
+  profileQuery?
+  showInfo
+  dirPost
+}) => {
   const [deletePost, { data, loading, error }] = useMutation(DELETE_POST, {
     refetchQueries: [{ query: profileQuery?.query }, profileQuery?.name],
   })
@@ -30,7 +39,9 @@ const Post = ({ dirPost, showInfo, profileQuery }) => {
         </button>
       ) : null}
 
-      <h3>{dirPost.user.email}</h3>
+      <Link to={routes.profile({ id: dirPost.user.id })}>
+        <h3>{dirPost.user.email}</h3>
+      </Link>
       <p>
         Direction: {dirPost.locationA} 🡆 {dirPost.locationB}
       </p>
@@ -49,7 +60,9 @@ const Post = ({ dirPost, showInfo, profileQuery }) => {
           ))}
         </ul>
       ) : (
-        <></>
+        <button onClick={() => navigate(routes.direction({ id: dirPost.id }))}>
+          Show Post
+        </button>
       )}
     </div>
   )

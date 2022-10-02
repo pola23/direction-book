@@ -11,7 +11,6 @@ const DirectionPage = ({ id }: Props) => {
       <MetaTags title="Direction" description="Direction page" />
 
       <h1>DirectionPage</h1>
-      <p>ID: {id}</p>
       <PostCell id={id} />
     </>
   )
