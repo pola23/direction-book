@@ -3,6 +3,7 @@ import { Link, navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
 import PostInformation from '../PostInformation/PostInformation'
+import PostRating from '../PostRating/PostRating'
 
 const DELETE_POST = gql`
   mutation deleteDirectionPost($id: Int!) {
@@ -50,7 +51,7 @@ const Post = ({
       <p>
         {len} Step{len > 1 ? 's' : ''}
       </p>
-
+      <PostRating />
       {showInfo ? (
         <ul>
           {dirPost.informations.map((info) => (
