@@ -36,6 +36,6 @@ export const schema = gql`
     createInformation(input: CreateInformationInput!): Information! @requireAuth
     updateInformation(id: Int!, input: UpdateInformationInput!): Information!
       @requireAuth
-    deleteInformation(id: Int!): Information! @requireAuth
+    deleteInformation(id: Int!): Information! @skipAuth
   }
 `

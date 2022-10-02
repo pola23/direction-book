@@ -7,6 +7,7 @@ import type {
 import { db } from 'src/lib/db'
 
 import { createFeedback } from '../feedbacks/feedbacks'
+import { deleteInformation } from '../informations/informations'
 
 export const directionPosts: QueryResolvers['directionPosts'] = () => {
   return db.directionPost.findMany()
@@ -53,13 +54,11 @@ export const updateDirectionPost: MutationResolvers['updateDirectionPost'] = ({
   })
 }
 
-export const deleteDirectionPost: MutationResolvers['deleteDirectionPost'] = ({
-  id,
-}) => {
-  return db.directionPost.delete({
-    where: { id },
-  })
-}
+export const deleteDirectionPost: MutationResolvers['deleteDirectionPost'] =
+  async ({ id }) => {
+    await db.information.deleteMany({ where: { directionPostId: id } })
+    return db.directionPost.delete({ where: { id } })
+  }
 
 export const DirectionPost: DirectionPostRelationResolvers = {
   user: (_obj, { root }) => {
