@@ -21,7 +21,6 @@ const Post = ({ dirPost, showInfo, profileQuery }) => {
   const len = dirPost.informations.length - 2
   return (
     <div>
-      {dirPost.id}
       {isAuthenticated && currentUser.id == dirPost.user.id ? (
         <button
           disabled={loading}

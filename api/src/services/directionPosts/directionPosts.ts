@@ -7,21 +7,23 @@ import type {
 import { db } from 'src/lib/db'
 
 import { createFeedback } from '../feedbacks/feedbacks'
-import { deleteInformation } from '../informations/informations'
 
-export const directionPosts: QueryResolvers['directionPosts'] = () => {
-  return db.directionPost.findMany()
+export const directionPosts: QueryResolvers['directionPosts'] = async () => {
+  return (await db.directionPost.findMany()).sort(
+    (dA, dB) => Number(dB.createdAt) - Number(dA.createdAt)
+  )
 }
 
-export const directionPostsProfile: QueryResolvers['directionPostsProfile'] = ({
-  id,
-}) => {
-  return db.directionPost.findMany({
-    where: {
-      userId: id,
-    },
-  })
-}
+export const directionPostsProfile: QueryResolvers['directionPostsProfile'] =
+  async ({ id }) => {
+    return (
+      await db.directionPost.findMany({
+        where: {
+          userId: id,
+        },
+      })
+    ).sort((dA, dB) => Number(dB.createdAt) - Number(dA.createdAt))
+  }
 
 export const directionPost: QueryResolvers['directionPost'] = ({ id }) => {
   return db.directionPost.findUnique({
