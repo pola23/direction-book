@@ -51,7 +51,11 @@ const Post = ({
       <p>
         {len} Step{len > 1 ? 's' : ''}
       </p>
-      <PostRating id={dirPost.id} />
+      <PostRating
+        userId={dirPost.user.id}
+        postId={dirPost.id}
+        feedbackId={dirPost.feedbackId}
+      />
       {showInfo ? (
         <ul>
           {dirPost.informations.map((info) => (

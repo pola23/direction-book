@@ -59,7 +59,9 @@ export const updateDirectionPost: MutationResolvers['updateDirectionPost'] = ({
 export const deleteDirectionPost: MutationResolvers['deleteDirectionPost'] =
   async ({ id }) => {
     await db.information.deleteMany({ where: { directionPostId: id } })
-    return db.directionPost.delete({ where: { id } })
+    const dirPost = await db.directionPost.delete({ where: { id } })
+    await db.feedback.delete({ where: { id: dirPost.feedbackId } })
+    return dirPost
   }
 
 export const DirectionPost: DirectionPostRelationResolvers = {

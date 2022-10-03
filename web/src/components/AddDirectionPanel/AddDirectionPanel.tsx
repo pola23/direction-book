@@ -10,6 +10,7 @@ const CREATE_DIRECTION_POST = gql`
   mutation CreateDirectionPost($input: CreateDirectionPostInput!) {
     createDirectionPost(input: $input) {
       id
+      feedbackId
     }
   }
 `

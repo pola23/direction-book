@@ -15,6 +15,7 @@ export const QUERY = gql`
       locationA
       locationB
       description
+      feedbackId
       user {
         id
         email
@@ -58,6 +59,7 @@ export const Success = ({
                 totalFare: p.totalFare,
                 description: p.description,
                 informations: p.informations,
+                feedbackId: p.feedbackId,
               }}
               showInfo={false}
               profileQuery={{ query: QUERY, name: 'FindPostsProfileQuery' }}

@@ -11,6 +11,7 @@ export const schema = gql`
   type Query {
     rates: [Rate!]! @requireAuth
     rate(id: Int!): Rate @requireAuth
+    userRate(userId: Int!, feedbackId: Int!): Rate @skipAuth
   }
 
   input CreateRateInput {

@@ -16,6 +16,12 @@ export const rate: QueryResolvers['rate'] = ({ id }) => {
   })
 }
 
+export const userRate: QueryResolvers['rate'] = ({ userId, feedbackId }) => {
+  return db.rate.findFirst({
+    where: { userId, feedbackId },
+  })
+}
+
 export const createRate: MutationResolvers['createRate'] = ({ input }) => {
   return db.rate.create({
     data: input,

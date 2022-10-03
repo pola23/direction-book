@@ -12,6 +12,7 @@ export const QUERY = gql`
       locationA
       locationB
       description
+      feedbackId
       user {
         id
         email
