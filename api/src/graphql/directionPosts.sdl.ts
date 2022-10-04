@@ -16,7 +16,7 @@ export const schema = gql`
   type Query {
     directionPost(id: Int!): DirectionPost @skipAuth
     directionPosts: [DirectionPost!]! @skipAuth
-    directionPostsProfile(id: Int!): [DirectionPost!]! @requireAuth
+    directionPostsProfile(id: Int!): [DirectionPost!]! @skipAuth
   }
 
   input CreateDirectionPostInput {

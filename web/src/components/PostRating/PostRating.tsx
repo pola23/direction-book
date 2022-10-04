@@ -4,6 +4,26 @@ import { useAuth } from '@redwoodjs/auth'
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation, useQuery } from '@redwoodjs/web'
 
+const GET_FEEDBACK = gql`
+  query feedback($id: Int!) {
+    feedback: feedback(id: $id) {
+      id
+      rating
+      rates {
+        id
+      }
+    }
+  }
+`
+
+const UPDATE_FEEDBACK = gql`
+  mutation updateFeedback($id: Int!) {
+    updateFeedback: updateFeedback(id: $id) {
+      id
+    }
+  }
+`
+
 const GET_RATE = gql`
   query userRate($userId: Int!, $feedbackId: Int!) {
     userRate: userRate(userId: $userId, feedbackId: $feedbackId) {
@@ -36,36 +56,54 @@ const PostRating = ({ postId, feedbackId }) => {
   const { loading, error, data } = useQuery(GET_RATE, {
     variables: { userId: currentUser?.id, feedbackId },
     onCompleted: () => setRate(data.userRate ? data.userRate.rate : 0),
-    skip: !currentUser,
+    skip: !isAuthenticated,
+  })
+
+  const getFeedbackState = useQuery(GET_FEEDBACK, {
+    variables: { id: feedbackId },
   })
 
   const [addRate, createRateState] = useMutation(CREATE_RATE)
   const [updateRate, updateRateState] = useMutation(UPDATE_RATE)
-  if (loading || createRateState.loading || updateRateState.loading)
+
+  const [updateFeedback, updateFeedbackState] = useMutation(UPDATE_FEEDBACK)
+  if (
+    loading ||
+    createRateState.loading ||
+    updateRateState.loading ||
+    getFeedbackState.loading ||
+    updateFeedbackState.loading
+  )
     return <>{'Loading...'}</>
   if (error || createRateState.error)
     return (
       <>{`Error! ${
-        error.message || createRateState.error || updateRateState.error
+        error.message ||
+        createRateState.error ||
+        updateRateState.error ||
+        getFeedbackState.error ||
+        updateFeedbackState.error
       }`}</>
     )
 
-  const onChange = (newRate) => {
+  const onChange = async (newRate) => {
     if (!isAuthenticated) return navigate(routes.login())
 
     if (rate == 0) {
-      addRate({
+      await addRate({
         variables: {
           input: { feedbackId, userId: currentUser.id, rate: newRate },
         },
         onCompleted: () => setRate(newRate),
       })
     } else {
-      updateRate({
+      await updateRate({
         variables: { id: data.userRate.id, input: { rate: newRate } },
         onCompleted: () => setRate(newRate),
       })
     }
+    await updateFeedback({ variables: { id: feedbackId } })
+    await getFeedbackState.refetch({ id: feedbackId })
   }
   return (
     <>
@@ -130,7 +168,10 @@ const PostRating = ({ postId, feedbackId }) => {
             </label>
           </div>
         </form>
-        <div>{rate}/5 - 10 Ratings</div>
+        <div>
+          {getFeedbackState.data.feedback.rating}/5 -{' '}
+          {getFeedbackState.data.feedback.rates.length} Ratings
+        </div>
         <br />
         <br />
       </div>

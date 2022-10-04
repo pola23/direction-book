@@ -24,12 +24,21 @@ export const createFeedback: MutationResolvers['createFeedback'] = ({
   })
 }
 
-export const updateFeedback: MutationResolvers['updateFeedback'] = ({
+export const updateFeedback: MutationResolvers['updateFeedback'] = async ({
   id,
-  input,
 }) => {
+  const rates = await db.feedback.findUnique({
+    where: { id },
+    select: { rates: true },
+  })
+  const sum = rates.rates
+    .map((e) => e.rate)
+    .reduce((total, currentValue) => (total = total + currentValue), 0)
+  const total = rates.rates.map((e) => e.rate).length
   return db.feedback.update({
-    data: input,
+    data: {
+      rating: sum / total,
+    },
     where: { id },
   })
 }
