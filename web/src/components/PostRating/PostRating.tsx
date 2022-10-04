@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { useAuth } from '@redwoodjs/auth'
+import { navigate, routes } from '@redwoodjs/router'
 import { useMutation, useQuery } from '@redwoodjs/web'
 
 const GET_RATE = gql`
@@ -19,23 +21,48 @@ const CREATE_RATE = gql`
   }
 `
 
+const UPDATE_RATE = gql`
+  mutation updateRate($id: Int!, $input: UpdateRateInput!) {
+    updateRate: updateRate(id: $id, input: $input) {
+      id
+    }
+  }
+`
+
 // import './PostRating.css'
-const PostRating = ({ userId, postId, feedbackId }) => {
+const PostRating = ({ postId, feedbackId }) => {
+  const { isAuthenticated, currentUser } = useAuth()
   const [rate, setRate] = useState(0)
   const { loading, error, data } = useQuery(GET_RATE, {
-    variables: { userId, feedbackId },
+    variables: { userId: currentUser?.id, feedbackId },
     onCompleted: () => setRate(data.userRate ? data.userRate.rate : 0),
+    skip: !currentUser,
   })
 
   const [addRate, createRateState] = useMutation(CREATE_RATE)
-  if (loading || createRateState.loading) return <>{'Loading...'}</>
+  const [updateRate, updateRateState] = useMutation(UPDATE_RATE)
+  if (loading || createRateState.loading || updateRateState.loading)
+    return <>{'Loading...'}</>
   if (error || createRateState.error)
-    return <>{`Error! ${error.message || createRateState.error}`}</>
+    return (
+      <>{`Error! ${
+        error.message || createRateState.error || updateRateState.error
+      }`}</>
+    )
 
   const onChange = (newRate) => {
+    if (!isAuthenticated) return navigate(routes.login())
+
     if (rate == 0) {
       addRate({
-        variables: { input: { feedbackId, userId, rate: newRate } },
+        variables: {
+          input: { feedbackId, userId: currentUser.id, rate: newRate },
+        },
+        onCompleted: () => setRate(newRate),
+      })
+    } else {
+      updateRate({
+        variables: { id: data.userRate.id, input: { rate: newRate } },
         onCompleted: () => setRate(newRate),
       })
     }
@@ -43,7 +70,6 @@ const PostRating = ({ userId, postId, feedbackId }) => {
   return (
     <>
       <div>
-        {`Hello ${feedbackId}`}
         <form>
           <div className="rate">
             <input
