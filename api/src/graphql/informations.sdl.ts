@@ -37,5 +37,6 @@ export const schema = gql`
     updateInformation(id: Int!, input: UpdateInformationInput!): Information!
       @requireAuth
     deleteInformation(id: Int!): Information! @skipAuth
+    deleteInfromationImage(url: String!): String! @requireAuth
   }
 `

@@ -7421,6 +7421,7 @@ __metadata:
   dependencies:
     "@redwoodjs/api": 3.0.1
     "@redwoodjs/graphql-server": 3.0.1
+    filestack-js: ^3.25.0
   languageName: unknown
   linkType: soft
 
@@ -12535,7 +12536,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"filestack-js@npm:^3.20.0":
+"filestack-js@npm:^3.20.0, filestack-js@npm:^3.25.0":
   version: 3.25.0
   resolution: "filestack-js@npm:3.25.0"
   dependencies:

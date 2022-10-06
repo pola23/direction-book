@@ -31,6 +31,7 @@ type infoType = {
   location: string
   fare: number
   canBeDeleted: boolean
+  isUpload: boolean
 }
 
 const AddDirectionPanel = () => {
@@ -55,6 +56,7 @@ const AddDirectionPanel = () => {
       location: locationA,
       fare: 0,
       canBeDeleted: false,
+      isUpload: false,
     },
     {
       listId: 1,
@@ -64,6 +66,7 @@ const AddDirectionPanel = () => {
       location: locationB,
       fare: 0,
       canBeDeleted: false,
+      isUpload: false,
     },
   ])
   const [description, setDescription] = useState<string>('')
@@ -75,6 +78,7 @@ const AddDirectionPanel = () => {
     location = '',
     fare = 0,
     canBeDeleted = true,
+    isUpload = false,
   }) => {
     const newInfo: infoType = {
       listId: infoId,
@@ -84,6 +88,7 @@ const AddDirectionPanel = () => {
       location: location,
       fare: fare,
       canBeDeleted: canBeDeleted,
+      isUpload: isUpload,
     }
     setInfoId((curr) => curr + 1)
     setInfoList((currInfo) => {
@@ -123,13 +128,13 @@ const AddDirectionPanel = () => {
     })
   }, [locationA, locationB])
 
-  if (AddDirectionState.loading) return 'Submitting...'
+  if (AddDirectionState.loading) return <>{'Submitting...'}</>
   if (AddDirectionState.error)
-    return `Submission error! ${AddDirectionState.error.message}`
+    return <>{`Submission error! ${AddDirectionState.error.message}`}</>
 
-  if (AddInformationState.loading) return 'Submitting...'
+  if (AddInformationState.loading) return <>{'Submitting...'}</>
   if (AddInformationState.error)
-    return `Submission error! ${AddInformationState.error.message}`
+    return <>{`Submission error! ${AddInformationState.error.message}`}</>
 
   return (
     <div>

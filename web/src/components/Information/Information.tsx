@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
+import InformationImageUpload from '../InformationImageUpload/InformationImageUpload'
 type infoType = {
   listId: number
   title: string
@@ -8,6 +9,7 @@ type infoType = {
   location: string
   fare: number
   canBeDeleted: boolean
+  isUpload: boolean
 }
 
 type propType = {
@@ -23,6 +25,8 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
   // const [location, setLocation] = useState(info.location)
   const [fare, setFare] = useState(info.fare)
 
+  const [isUpload, setIsUpload] = useState(info.isUpload)
+
   const updatedInfo = useMemo(() => {
     return {
       listId: info.listId,
@@ -32,6 +36,7 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
       location: info.location,
       fare: fare,
       canBeDeleted: info.canBeDeleted,
+      isUpload: isUpload,
     }
   }, [
     description,
@@ -40,6 +45,7 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
     info.canBeDeleted,
     info.listId,
     info.location,
+    isUpload,
     title,
   ])
 
@@ -85,6 +91,7 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
             setImageUrl(e.target.value)
           }}
         />
+
         <br />
         <label>Loc: {info.location}</label>
         <br />
@@ -98,6 +105,11 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
           }}
         />
         <br />
+
+        <InformationImageUpload
+          imageState={{ imageUrl, setImageUrl }}
+          isUploadState={{ isUpload, setIsUpload }}
+        />
       </form>
     </div>
   )

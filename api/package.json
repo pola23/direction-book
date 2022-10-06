@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@redwoodjs/api": "3.0.1",
-    "@redwoodjs/graphql-server": "3.0.1"
+    "@redwoodjs/graphql-server": "3.0.1",
+    "filestack-js": "^3.25.0"
   }
 }
