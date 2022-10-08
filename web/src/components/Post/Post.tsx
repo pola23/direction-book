@@ -43,6 +43,7 @@ const Post = ({
       <Link to={routes.profile({ id: dirPost.user.id })}>
         <h3>{dirPost.user.email}</h3>
       </Link>
+      <p>Posted at: {dirPost.createdAt}</p>
       <p>
         Direction: {dirPost.locationA} 🡆 {dirPost.locationB}
       </p>

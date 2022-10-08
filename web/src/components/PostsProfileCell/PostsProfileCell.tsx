@@ -16,6 +16,7 @@ export const QUERY = gql`
       locationB
       description
       feedbackId
+      createdAt
       user {
         id
         email
@@ -60,6 +61,7 @@ export const Success = ({
                 description: p.description,
                 informations: p.informations,
                 feedbackId: p.feedbackId,
+                createdAt: p.createdAt,
               }}
               showInfo={false}
               profileQuery={{ query: QUERY, name: 'FindPostsProfileQuery' }}
