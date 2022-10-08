@@ -8,6 +8,7 @@ type infoType = {
   imageUrl: string
   location: string
   fare: number
+  mode: string
   canBeDeleted: boolean
   isUpload: boolean
 }
@@ -22,6 +23,7 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
   const [title, setTitle] = useState(info.title)
   const [description, setDescription] = useState(info.description)
   const [imageUrl, setImageUrl] = useState(info.imageUrl)
+  const [mode, setMode] = useState(info.mode)
   // const [location, setLocation] = useState(info.location)
   const [fare, setFare] = useState(info.fare)
 
@@ -35,6 +37,7 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
       imageUrl: imageUrl,
       location: info.location,
       fare: fare,
+      mode: mode,
       canBeDeleted: info.canBeDeleted,
       isUpload: isUpload,
     }
@@ -46,6 +49,7 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
     info.listId,
     info.location,
     isUpload,
+    mode,
     title,
   ])
 
@@ -80,6 +84,16 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
           }}
           cols={40}
           rows={5}
+        />
+        <br />
+        <input
+          type="text"
+          id="mode"
+          value={mode}
+          placeholder="Mode of Transportation"
+          onChange={(e) => {
+            setMode(e.target.value)
+          }}
         />
         <br />
         <input

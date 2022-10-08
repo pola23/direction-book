@@ -29,6 +29,7 @@ model Information {
   description     String?
   imageUrl        String?
   location        String?
+  mode            String?
   fare            Float         @default(0)
   directionPost   DirectionPost @relation(fields: [directionPostId], references: [id])
 }

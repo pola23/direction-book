@@ -6,6 +6,7 @@ const PostInformation = ({ info }) => {
       <p>Description: {info.description}</p>
       <p>imageUrl: {info.imageUrl}</p>
       <p>fare: {info.fare}</p>
+      <p>mode: {info.mode}</p>
     </div>
   )
 }

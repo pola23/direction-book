@@ -5,6 +5,7 @@ export const schema = gql`
     title: String
     description: String
     imageUrl: String
+    mode: String
     location: String
     directionPost: DirectionPost!
     fare: Float!
@@ -22,6 +23,7 @@ export const schema = gql`
     imageUrl: String
     location: String
     fare: Float
+    mode: String
   }
 
   input UpdateInformationInput {

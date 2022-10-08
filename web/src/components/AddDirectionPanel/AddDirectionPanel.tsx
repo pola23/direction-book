@@ -30,6 +30,7 @@ type infoType = {
   imageUrl: string
   location: string
   fare: number
+  mode: string
   canBeDeleted: boolean
   isUpload: boolean
 }
@@ -55,6 +56,7 @@ const AddDirectionPanel = () => {
       imageUrl: '',
       location: locationA,
       fare: 0,
+      mode: '',
       canBeDeleted: false,
       isUpload: false,
     },
@@ -65,6 +67,7 @@ const AddDirectionPanel = () => {
       imageUrl: '',
       location: locationB,
       fare: 0,
+      mode: '',
       canBeDeleted: false,
       isUpload: false,
     },
@@ -77,6 +80,7 @@ const AddDirectionPanel = () => {
     imageUrl = '',
     location = '',
     fare = 0,
+    mode = '',
     canBeDeleted = true,
     isUpload = false,
   }) => {
@@ -87,6 +91,7 @@ const AddDirectionPanel = () => {
       imageUrl: imageUrl,
       location: location,
       fare: fare,
+      mode: mode,
       canBeDeleted: canBeDeleted,
       isUpload: isUpload,
     }
@@ -222,6 +227,7 @@ const AddDirectionPanel = () => {
                     imageUrl: e.imageUrl,
                     location: e.location,
                     fare: e.fare,
+                    mode: e.mode,
                   },
                 },
               })

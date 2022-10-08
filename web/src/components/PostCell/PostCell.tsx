@@ -24,6 +24,7 @@ export const QUERY = gql`
         imageUrl
         location
         fare
+        mode
       }
     }
   }
