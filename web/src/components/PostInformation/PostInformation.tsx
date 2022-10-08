@@ -5,6 +5,13 @@ const PostInformation = ({ info }) => {
       <p>Location: {info.location}</p>
       <p>Description: {info.description}</p>
       <p>imageUrl: {info.imageUrl}</p>
+      {info.imageUrl && (
+        <img
+          src={info.imageUrl.split('&')[0]}
+          style={{ height: '250px' }}
+          alt={`UploadedImage`}
+        />
+      )}
       <p>fare: {info.fare}</p>
       <p>mode: {info.mode}</p>
     </div>

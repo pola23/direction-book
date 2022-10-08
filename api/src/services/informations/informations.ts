@@ -1,4 +1,6 @@
+import { Axios } from 'axios'
 import * as Filestack from 'filestack-js'
+import sha1 from 'sha1'
 import type {
   QueryResolvers,
   MutationResolvers,
@@ -44,24 +46,29 @@ export const deleteInformation: MutationResolvers['deleteInformation'] = ({
 }
 
 export const deleteInfromationImage: MutationResolvers['deleteInfromationImage'] =
-  async ({ url }) => {
-    const client = Filestack.init(process.env.REDWOOD_ENV_FILESTACK_API_KEY)
+  async ({ publicId }) => {
+    const timestamp = new Date().getTime()
+    const string = `public_id=${publicId}&timestamp=${timestamp}${'t9Nrs662f2JfKxiG4RtV4hSNWEo'}`
+    const signature = await sha1(string)
 
-    const handle = url.split('/').pop()
-    console.log('HANDLE', handle)
+    const formData = new FormData()
+    formData.append('public_id', publicId)
+    formData.append('api_key', '462859866789283')
+    formData.append('signature', signature)
+    formData.append('timestamp', `${timestamp}`)
 
-    const security = Filestack.getSecurity(
-      {
-        // We set `expiry` at `now() + 5 minutes`.
-        expiry: new Date().getTime() + 5 * 60 * 1000,
-        handle,
-        call: ['remove'],
-      },
-      process.env.REDWOOD_ENV_FILESTACK_SECRET
+    let mess = ''
+    Axios.post(
+      'https://api.cloudinary.com/v1_1/dzmxvq5f5/image/destroy',
+      formData
     )
-
-    await client.remove(handle, security)
-    return 'DONE'
+      .then(() => {
+        mess = 'DONE'
+      })
+      .catch((err) => {
+        mess = err
+      })
+    return mess
   }
 
 export const Information: InformationRelationResolvers = {
