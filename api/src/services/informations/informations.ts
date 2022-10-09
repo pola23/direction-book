@@ -1,5 +1,5 @@
-import { Axios } from 'axios'
-import * as Filestack from 'filestack-js'
+import Axios from 'axios'
+import FormData from 'form-data'
 import sha1 from 'sha1'
 import type {
   QueryResolvers,
@@ -47,6 +47,7 @@ export const deleteInformation: MutationResolvers['deleteInformation'] = ({
 
 export const deleteInfromationImage: MutationResolvers['deleteInfromationImage'] =
   async ({ publicId }) => {
+    if (!publicId) return
     const timestamp = new Date().getTime()
     const string = `public_id=${publicId}&timestamp=${timestamp}${'t9Nrs662f2JfKxiG4RtV4hSNWEo'}`
     const signature = await sha1(string)

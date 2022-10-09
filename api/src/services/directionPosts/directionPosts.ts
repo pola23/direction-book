@@ -7,6 +7,7 @@ import type {
 import { db } from 'src/lib/db'
 
 import { createFeedback } from '../feedbacks/feedbacks'
+import { deleteInfromationImage } from '../informations/informations'
 
 export const directionPosts: QueryResolvers['directionPosts'] = async () => {
   return (await db.directionPost.findMany()).sort(
@@ -58,9 +59,25 @@ export const updateDirectionPost: MutationResolvers['updateDirectionPost'] = ({
 
 export const deleteDirectionPost: MutationResolvers['deleteDirectionPost'] =
   async ({ id }) => {
+    const dirPost = await db.directionPost.findUnique({
+      where: { id },
+      include: { informations: true },
+    })
+
+    await Promise.all(
+      dirPost.informations.map((e) => {
+        deleteInfromationImage({ publicId: e.imageUrl.split('&')[1] })
+      })
+    )
+
     await db.information.deleteMany({ where: { directionPostId: id } })
-    const dirPost = await db.directionPost.delete({ where: { id } })
+    await db.directionPost.delete({
+      where: { id },
+      include: { informations: true },
+    })
+
     await db.feedback.delete({ where: { id: dirPost.feedbackId } })
+
     return dirPost
   }
 

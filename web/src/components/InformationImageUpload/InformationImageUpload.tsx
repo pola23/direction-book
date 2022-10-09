@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import Axios from 'axios'
-import sha1 from 'sha1'
 
 import { useMutation } from '@redwoodjs/web'
 
@@ -14,9 +13,9 @@ const DELETE_IMAGE = gql`
 const InformationImageUpload = ({ imageState, isUploadState }) => {
   const [deleteImage, { data, loading, error }] = useMutation(DELETE_IMAGE)
   const [imageSelected, setImageSelected] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
   const uploadImage = () => {
-    setIsLoading(true)
+    isUploadState.setIsUpload(true)
     const formData = new FormData()
     formData.append('file', imageSelected)
     formData.append('upload_preset', 'amz64zyn')
@@ -27,33 +26,7 @@ const InformationImageUpload = ({ imageState, isUploadState }) => {
     )
       .then((res) => {
         imageState.setImageUrl(`${res.data.secure_url}&${res.data.public_id}`)
-        setIsLoading(false)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-  const destroyImage = async () => {
-    setIsLoading(true)
-    const public_id = imageState.imageUrl.split('&')[1]
-    const timestamp = new Date().getTime()
-    const string = `public_id=${public_id}&timestamp=${timestamp}${'t9Nrs662f2JfKxiG4RtV4hSNWEo'}`
-    const signature = await sha1(string)
-
-    const formData = new FormData()
-    formData.append('public_id', public_id)
-    formData.append('api_key', '462859866789283')
-    formData.append('signature', signature)
-    formData.append('timestamp', `${timestamp}`)
-
-    Axios.post(
-      'https://api.cloudinary.com/v1_1/dzmxvq5f5/image/destroy',
-      formData
-    )
-      .then(() => {
-        imageState.setImageUrl('')
-        setIsLoading(false)
+        isUploadState.setIsUpload(false)
       })
       .catch((err) => {
         console.log(err)
@@ -71,7 +44,11 @@ const InformationImageUpload = ({ imageState, isUploadState }) => {
       />
 
       {imageSelected && !imageState.imageUrl && (
-        <button type="button" onClick={uploadImage} disabled={isLoading}>
+        <button
+          type="button"
+          onClick={uploadImage}
+          disabled={isUploadState.isUpload}
+        >
           Upload
         </button>
       )}
@@ -79,8 +56,13 @@ const InformationImageUpload = ({ imageState, isUploadState }) => {
       {imageState.imageUrl && (
         <button
           type="button"
-          onClick={() => destroyImage()}
-          disabled={isLoading}
+          onClick={async () => {
+            await deleteImage({
+              variables: { publicId: imageState.imageUrl.split('&')[1] },
+            })
+            imageState.setImageUrl('')
+          }}
+          disabled={loading}
         >
           Destroy
         </button>
