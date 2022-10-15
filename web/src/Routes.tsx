@@ -20,10 +20,10 @@ const Routes = () => {
       <Set wrap={NavLayout}>
         <Private unauthenticated="login">
           <Route path="/add-direction" page={AddDirectionPage} name="addDirection" />
+          <Route path="/profile/{id:Int}" page={ProfilePage} name="profile" />
         </Private>
         <Route path="/" page={HomePage} name="home" />
         <Route path="/direction/{id:Int}" page={DirectionPage} name="direction" />
-        <Route path="/profile/{id:Int}" page={ProfilePage} name="profile" />
       </Set>{' '}
       <Route notfound page={NotFoundPage} />
     </Router>

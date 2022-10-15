@@ -13,10 +13,14 @@
     ]
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@mantine/core": "^5.5.5",
+    "@mantine/hooks": "^5.5.5",
     "@redwoodjs/auth": "3.0.1",
     "@redwoodjs/forms": "3.0.1",
     "@redwoodjs/router": "3.0.1",
     "@redwoodjs/web": "3.0.1",
+    "@tabler/icons": "^1.104.0",
     "axios": "^1.1.2",
     "cloudinary": "^1.32.0",
     "filestack-react": "^4.0.1",

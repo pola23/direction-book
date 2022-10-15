@@ -1,3 +1,5 @@
+import { Space } from '@mantine/core'
+
 import { useQuery } from '@redwoodjs/web'
 
 import Post from '../Post/Post'
@@ -38,6 +40,7 @@ const PostList = ({ id = '', from = '', to = '' }) => {
   if (error) return <p>`Error! ${error.message}`</p>
   return (
     <>
+      <Space h={7} />
       <div>
         <SearchPost id={id} refetch={refetch} />
       </div>
