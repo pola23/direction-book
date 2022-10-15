@@ -13,9 +13,14 @@ export const schema = gql`
     description: String
   }
 
+  input filterInput {
+    id: String!
+    from: String!
+    to: String!
+  }
   type Query {
     directionPost(id: Int!): DirectionPost @skipAuth
-    directionPosts: [DirectionPost!]! @skipAuth
+    directionPosts(input: filterInput!): [DirectionPost!]! @skipAuth
     directionPostsProfile(id: Int!): [DirectionPost!]! @skipAuth
   }
 

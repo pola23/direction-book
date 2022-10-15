@@ -9,10 +9,19 @@ import { db } from 'src/lib/db'
 import { createFeedback } from '../feedbacks/feedbacks'
 import { deleteInfromationImage } from '../informations/informations'
 
-export const directionPosts: QueryResolvers['directionPosts'] = async () => {
-  return (await db.directionPost.findMany()).sort(
-    (dA, dB) => Number(dB.createdAt) - Number(dA.createdAt)
-  )
+export const directionPosts: QueryResolvers['directionPosts'] = async ({
+  input,
+}) => {
+  const { from, to, id } = input
+  return (
+    await db.directionPost.findMany({
+      where: {
+        userId: id == '' ? undefined : +id,
+        locationA: from == '' ? undefined : { contains: from },
+        locationB: to == '' ? undefined : { contains: to },
+      },
+    })
+  ).sort((dA, dB) => Number(dB.createdAt) - Number(dA.createdAt))
 }
 
 export const directionPostsProfile: QueryResolvers['directionPostsProfile'] =

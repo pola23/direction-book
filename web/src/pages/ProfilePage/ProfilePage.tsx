@@ -1,6 +1,6 @@
 import { MetaTags } from '@redwoodjs/web'
 
-import PostsProfileCell from 'src/components/PostsProfileCell'
+import PostList from 'src/components/PostList/PostList'
 
 const ProfilePage = ({ id }: { id: number }) => {
   return (
@@ -8,7 +8,7 @@ const ProfilePage = ({ id }: { id: number }) => {
       <MetaTags title="Profile" description="Profile page" />
 
       <h1>Profile</h1>
-      <PostsProfileCell id={id} />
+      <PostList id={`${id}`} />
     </>
   )
 }
