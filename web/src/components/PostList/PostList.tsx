@@ -1,4 +1,4 @@
-import { Space } from '@mantine/core'
+import { Group, Space } from '@mantine/core'
 
 import { useQuery } from '@redwoodjs/web'
 
@@ -52,27 +52,29 @@ const PostList = ({ id = '', from = '', to = '' }) => {
           {data.directionPosts.length == 0 ? (
             <p>No Directions Available</p>
           ) : (
-            <ul>
+            <Group style={{ margin: 'auto', display: 'block', width: '90%' }}>
               {data.directionPosts.map((p) => (
-                <li key={p.id}>
-                  <Post
-                    dirPost={{
-                      id: p.id,
-                      user: p.user,
-                      locationA: p.locationA,
-                      locationB: p.locationB,
-                      totalFare: p.totalFare,
-                      description: p.description,
-                      informations: p.informations,
-                      feedbackId: p.feedbackId,
-                      createdAt: p.createdAt,
-                    }}
-                    showInfo={false}
-                    profileQuery={{ query: QUERY, name: 'FindPostsHomeQuery' }}
-                  />
-                </li>
+                <Post
+                  key={p.id}
+                  dirPost={{
+                    id: p.id,
+                    user: p.user,
+                    locationA: p.locationA,
+                    locationB: p.locationB,
+                    totalFare: p.totalFare,
+                    description: p.description,
+                    informations: p.informations,
+                    feedbackId: p.feedbackId,
+                    createdAt: p.createdAt,
+                  }}
+                  showInfo={false}
+                  profileQuery={{
+                    query: QUERY,
+                    name: 'FindPostsHomeQuery',
+                  }}
+                />
               ))}
-            </ul>
+            </Group>
           )}
         </div>
       )}

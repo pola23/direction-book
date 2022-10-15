@@ -22,7 +22,13 @@ const NavLayout = ({ children }: NavLayoutProps) => {
   return (
     <>
       <div style={{ backgroundColor: '#E7F5FF' }}>
-        <Title order={3} align="center" size={'225%'} color={'#1864AB'}>
+        <Title
+          order={3}
+          align="center"
+          size={'225%'}
+          color={'#1864AB'}
+          style={{ padding: '1.5% 0px' }}
+        >
           Direction Book
         </Title>
       </div>

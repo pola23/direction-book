@@ -1,4 +1,12 @@
-import { Avatar, Button, Container, Group, Space, Text } from '@mantine/core'
+import {
+  Avatar,
+  Button,
+  Center,
+  Container,
+  Group,
+  Space,
+  Text,
+} from '@mantine/core'
 import type {
   FindProfileInfoQuery,
   FindProfileInfoQueryVariables,
