@@ -13,6 +13,10 @@ export const users: QueryResolvers['users'] = () => {
 export const user: QueryResolvers['user'] = ({ id }) => {
   return db.user.findUnique({
     where: { id },
+    include: {
+      directionPost: { select: { id: true } },
+      Rate: { select: { userId: true, rate: true } },
+    },
   })
 }
 
