@@ -172,8 +172,6 @@ const PostRating = ({ postId, feedbackId }) => {
           {getFeedbackState.data.feedback.rating}/5 -{' '}
           {getFeedbackState.data.feedback.rates.length} Ratings
         </div>
-        <br />
-        <br />
       </div>
     </>
   )
