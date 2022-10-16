@@ -1,3 +1,4 @@
+import { Group, Loader } from '@mantine/core'
 import type { FindPostQuery, FindPostQueryVariables } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
@@ -31,7 +32,11 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => (
+  <Group position="center" style={{ padding: '50px' }}>
+    <Loader color="indigo" variant="dots" />
+  </Group>
+)
 
 export const Empty = () => <div>Empty</div>
 
