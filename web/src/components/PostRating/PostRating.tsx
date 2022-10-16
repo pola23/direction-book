@@ -1,5 +1,8 @@
 import { useState } from 'react'
 
+import 'src/index.css'
+import { Group, Loader, Text } from '@mantine/core'
+
 import { useAuth } from '@redwoodjs/auth'
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation, useQuery } from '@redwoodjs/web'
@@ -74,7 +77,11 @@ const PostRating = ({ postId, feedbackId }) => {
     getFeedbackState.loading ||
     updateFeedbackState.loading
   )
-    return <>{'Loading...'}</>
+    return (
+      <Group position="center" style={{ padding: '50px' }}>
+        <Loader color="indigo" variant="dots" />
+      </Group>
+    )
   if (error || createRateState.error)
     return (
       <>{`Error! ${
@@ -107,7 +114,15 @@ const PostRating = ({ postId, feedbackId }) => {
   }
   return (
     <>
-      <div>
+      <Group style={{ justifyContent: 'space-between' }}>
+        <Group style={{ paddingLeft: '10px' }}>
+          <Text size="xl" weight={700} color={'#2C2E33'}>
+            {getFeedbackState.data.feedback.rating} / 5
+          </Text>
+          <Text color={'#2C2E33'} italic>
+            {getFeedbackState.data.feedback.rates.length} Ratings
+          </Text>
+        </Group>
         <form>
           <div className="rate">
             <input
@@ -121,6 +136,7 @@ const PostRating = ({ postId, feedbackId }) => {
             <label htmlFor={`star5-${postId}`} title="text">
               5 stars
             </label>
+
             <input
               type="radio"
               id={`star4-${postId}`}
@@ -132,6 +148,7 @@ const PostRating = ({ postId, feedbackId }) => {
             <label htmlFor={`star4-${postId}`} title="text">
               4 stars
             </label>
+
             <input
               type="radio"
               id={`star3-${postId}`}
@@ -143,6 +160,7 @@ const PostRating = ({ postId, feedbackId }) => {
             <label htmlFor={`star3-${postId}`} title="text">
               3 stars
             </label>
+
             <input
               type="radio"
               id={`star2-${postId}`}
@@ -155,6 +173,7 @@ const PostRating = ({ postId, feedbackId }) => {
             <label htmlFor={`star2-${postId}`} title="text">
               2 stars
             </label>
+
             <input
               type="radio"
               id={`star1-${postId}`}
@@ -168,11 +187,7 @@ const PostRating = ({ postId, feedbackId }) => {
             </label>
           </div>
         </form>
-        <div>
-          {getFeedbackState.data.feedback.rating}/5 -{' '}
-          {getFeedbackState.data.feedback.rates.length} Ratings
-        </div>
-      </div>
+      </Group>
     </>
   )
 }

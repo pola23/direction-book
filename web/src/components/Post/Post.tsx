@@ -55,6 +55,7 @@ const Post = ({
   } ${dateInfo.getUTCDate()}, ${dateInfo.getUTCFullYear()}`
   const [deletePost, { data, loading, error }] = useMutation(DELETE_POST, {
     refetchQueries: [{ query: profileQuery?.query }, profileQuery?.name],
+    onCompleted: () => navigate(routes.home()),
   })
   const { isAuthenticated, currentUser } = useAuth()
   if (error) return <p>Submission error! ${error.message}</p>
@@ -176,7 +177,7 @@ const Post = ({
               <div style={{ margin: '10px 0px' }}>
                 <Divider my="xs" label="Description" variant="dotted" />
                 <Container>
-                  <Text style={{ wordWrap: 'break-word' }}>
+                  <Text color={'dark.5'} style={{ wordWrap: 'break-word' }}>
                     {dirPost.description}
                   </Text>
                 </Container>
@@ -202,15 +203,17 @@ const Post = ({
                 {len} Step{len > 1 ? 's' : ''}
               </Text>
             </Group>
-
             {showInfo ? (
-              <ul>
-                {dirPost.informations.map((info) => (
-                  <li key={info.id}>
-                    <PostInformation info={info} />
-                  </li>
-                ))}
-              </ul>
+              <Container>
+                <Divider style={{ margin: '15px 0' }} />
+                <ul>
+                  {dirPost.informations.map((info) => (
+                    <li key={info.id}>
+                      <PostInformation info={info} />
+                    </li>
+                  ))}
+                </ul>
+              </Container>
             ) : (
               <button
                 onClick={() => navigate(routes.direction({ id: dirPost.id }))}

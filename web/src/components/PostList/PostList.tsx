@@ -1,4 +1,4 @@
-import { Group, Space } from '@mantine/core'
+import { Group, Loader, Space } from '@mantine/core'
 
 import { useQuery } from '@redwoodjs/web'
 
@@ -46,7 +46,9 @@ const PostList = ({ id = '', from = '', to = '' }) => {
       </div>
 
       {loading ? (
-        <p>{'Loading...'}</p>
+        <Group position="center" style={{ padding: '50px' }}>
+          <Loader color="indigo" variant="dots" />
+        </Group>
       ) : (
         <div>
           {data.directionPosts.length == 0 ? (
