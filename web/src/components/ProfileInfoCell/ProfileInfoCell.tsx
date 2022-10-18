@@ -4,6 +4,7 @@ import {
   Center,
   Container,
   Group,
+  Loader,
   Space,
   Text,
 } from '@mantine/core'
@@ -31,7 +32,11 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => (
+  <Group position="center" style={{ padding: '50px' }}>
+    <Loader color="indigo" variant="dots" />
+  </Group>
+)
 
 export const Empty = () => <div>Empty</div>
 
