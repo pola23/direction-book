@@ -7,7 +7,6 @@ const AddDirectionPage = () => {
     <>
       <MetaTags title="AddDirection" description="AddDirection page" />
 
-      <h1>AddDirectionPage</h1>
       <AddDirectionPanel />
     </>
   )

@@ -1,4 +1,4 @@
-import { Group, Loader, Space } from '@mantine/core'
+import { Group, Loader, Space, Text } from '@mantine/core'
 
 import { useQuery } from '@redwoodjs/web'
 
@@ -52,7 +52,9 @@ const PostList = ({ id = '', from = '', to = '' }) => {
       ) : (
         <div>
           {data.directionPosts.length == 0 ? (
-            <p>No Directions Available</p>
+            <Group position="center" style={{ padding: '50px' }}>
+              <Text>No Directions Available</Text>
+            </Group>
           ) : (
             <Group style={{ margin: 'auto', display: 'block', width: '90%' }}>
               {data.directionPosts.map((p) => (

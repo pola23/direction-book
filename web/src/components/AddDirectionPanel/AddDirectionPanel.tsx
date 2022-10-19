@@ -1,5 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
+import {
+  Container,
+  Divider,
+  Group,
+  Input,
+  Space,
+  Stack,
+  Text,
+  Textarea,
+} from '@mantine/core'
+
 import { useAuth } from '@redwoodjs/auth'
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
@@ -143,105 +154,110 @@ const AddDirectionPanel = () => {
 
   return (
     <div>
-      <input
-        type="text"
-        id="locationA"
-        defaultValue={locationA}
-        placeholder="Location A"
-        onChange={(e) => {
-          setLocationA(e.target.value)
-        }}
-      />
-      <input
-        type="text"
-        id="locationB"
-        defaultValue={locationB}
-        placeholder="Location B"
-        onChange={(e) => {
-          setLocationB(e.target.value)
-        }}
-      />
-      <br />
-      <textarea
-        id="description"
-        placeholder="Description"
-        cols={40}
-        rows={5}
-        onChange={(e) => {
-          setDescription(e.target.value)
-        }}
-      />
-      <br />
-      <button
-        onClick={() => {
-          console.log(infoList)
-          console.log(locationA, locationB, description)
-        }}
-      >
-        Get INFOS
-      </button>
-      <ul>
-        {infoList.map((info) => (
-          <li key={info.listId}>
-            <Information
-              info={info}
-              updateInfoValues={UpdateInfoValues}
-              deleteInfo={deleteInfo}
+      <Container style={{ padding: '10px 0' }}>
+        <Divider />
+        <Stack spacing={7} style={{ padding: '10px 0' }}>
+          <Input.Wrapper label="From:" size="lg">
+            <Input
+              style={{ padding: '0 15px' }}
+              type="text"
+              id="locationA"
+              placeholder="Destination A"
+              defaultValue={locationA}
+              onChange={(e) => {
+                setLocationA(e.target.value)
+              }}
             />
-          </li>
-        ))}
-      </ul>
+          </Input.Wrapper>
+          <Input.Wrapper label="To:" size="lg">
+            <Input
+              style={{ padding: '0 15px' }}
+              type="text"
+              id="locationB"
+              placeholder="Destination B"
+              defaultValue={locationB}
+              onChange={(e) => {
+                setLocationB(e.target.value)
+              }}
+            />
+          </Input.Wrapper>
+          <Space h={5} />
+          <Textarea
+            style={{ padding: '0 15px' }}
+            id="description"
+            placeholder="Description"
+            onChange={(e) => {
+              setDescription(e.target.value)
+            }}
+          />
+        </Stack>
+        <Divider />
+      </Container>
+      <Container>
+        <br />
+        <ul>
+          {infoList.map((info) => (
+            <li key={info.listId}>
+              <Information
+                info={info}
+                updateInfoValues={UpdateInfoValues}
+                deleteInfo={deleteInfo}
+              />
+            </li>
+          ))}
+        </ul>
 
-      <button
-        onClick={() => {
-          AddNewInfo({})
-        }}
-      >
-        Add Information
-      </button>
+        <button
+          onClick={() => {
+            AddNewInfo({})
+          }}
+        >
+          Add Information
+        </button>
 
-      <button
-        disabled={infoList.length <= 2}
-        onClick={async () => {
-          const dirPost = await addDirectionPost({
-            variables: {
-              input: {
-                userId: currentUser.id,
-                totalFare: infoList
-                  .map((i) => i.fare)
-                  .reduce((a, b) => a + b, 0),
-                locationA: locationA,
-                locationB: locationB,
-                description: description,
-              },
-            },
-          })
-          await Promise.all(
-            infoList.map((e) =>
-              addInformation({
-                variables: {
-                  input: {
-                    directionPostId: dirPost.data.createDirectionPost.id,
-                    title: e.title,
-                    description: e.description,
-                    imageUrl: e.imageUrl,
-                    location: e.location,
-                    fare: e.fare,
-                    mode: e.mode,
-                  },
+        <button
+          disabled={infoList.length <= 2}
+          onClick={async () => {
+            const dirPost = await addDirectionPost({
+              variables: {
+                input: {
+                  userId: currentUser.id,
+                  totalFare: infoList
+                    .map((i) => i.fare)
+                    .reduce((a, b) => a + b, 0),
+                  locationA: locationA,
+                  locationB: locationB,
+                  description: description,
                 },
+              },
+            })
+            await Promise.all(
+              infoList.map((e) =>
+                addInformation({
+                  variables: {
+                    input: {
+                      directionPostId: dirPost.data.createDirectionPost.id,
+                      title: e.title,
+                      description: e.description,
+                      imageUrl: e.imageUrl,
+                      location: e.location,
+                      fare: e.fare,
+                      mode: e.mode,
+                    },
+                  },
+                })
+              )
+            )
+            navigate(
+              routes.direction({
+                id: dirPost.data.createDirectionPost.id,
               })
             )
-          )
-          navigate(
-            routes.direction({
-              id: dirPost.data.createDirectionPost.id,
-            })
-          )
-        }}
-      >
-        SUBMIT
-      </button>
+          }}
+        >
+          SUBMIT
+        </button>
+      </Container>
     </div>
   )
 }
