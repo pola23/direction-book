@@ -5,6 +5,7 @@ import {
   Container,
   Divider,
   Group,
+  Loader,
   Menu,
   Text,
 } from '@mantine/core'
@@ -71,6 +72,15 @@ const Post = ({
     sortedDirPost[1],
   ]
 
+  console.log(adjustedInfoList)
+
+  if (loading)
+    return (
+      <Group position="center" style={{ padding: '50px' }}>
+        <Loader color="indigo" variant="dots" />
+      </Group>
+    )
+
   return (
     <>
       <Container
@@ -130,7 +140,6 @@ const Post = ({
                   <Menu.Item
                     icon={<IconTrash color={'#d27979'} />}
                     disabled={
-                      loading ||
                       !(isAuthenticated && currentUser.id == dirPost.user.id)
                     }
                     onClick={() =>
@@ -217,7 +226,7 @@ const Post = ({
                 <Divider style={{ margin: '15px 0' }} />
                 <ul>
                   {adjustedInfoList.map((info) => (
-                    <li key={info.id}>
+                    <li key={info.listId}>
                       <PostInformation info={info} />
                     </li>
                   ))}

@@ -116,8 +116,8 @@ const PostRating = ({ postId, feedbackId }) => {
     <>
       <Group style={{ justifyContent: 'space-between' }}>
         <Group style={{ paddingLeft: '10px' }}>
-          <Text size="xl" weight={700} color={'#2C2E33'}>
-            {getFeedbackState.data.feedback.rating} / 5
+          <Text size="lg" weight={700} color={'#2C2E33'}>
+            {getFeedbackState.data.feedback.rating}/5
           </Text>
           <Text color={'#2C2E33'} italic>
             {getFeedbackState.data.feedback.rates.length} Ratings
