@@ -1,15 +1,15 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import {
   Container,
-  Divider,
-  Group,
   Input,
   Space,
   Stack,
-  Text,
   Textarea,
+  Text,
+  Button,
 } from '@mantine/core'
+import { IconPlus } from '@tabler/icons'
 
 import { useAuth } from '@redwoodjs/auth'
 import { navigate, routes } from '@redwoodjs/router'
@@ -109,7 +109,12 @@ const AddDirectionPanel = () => {
     setInfoId((curr) => curr + 1)
     setInfoList((currInfo) => {
       const index = currInfo.length - 1
-      return [...currInfo.slice(0, index), newInfo, ...currInfo.slice(index)]
+      const newAdd = [
+        ...currInfo.slice(0, index),
+        newInfo,
+        ...currInfo.slice(index),
+      ]
+      return newAdd
     })
   }
 
@@ -154,9 +159,16 @@ const AddDirectionPanel = () => {
 
   return (
     <div>
-      <Container style={{ padding: '10px 0' }}>
-        <Divider />
-        <Stack spacing={7} style={{ padding: '10px 0' }}>
+      <Space h={10} />
+      <Container
+        style={{
+          padding: '10px 0',
+          borderRadius: '10px',
+          boxShadow:
+            'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
+        }}
+      >
+        <Stack spacing={7} style={{ padding: '10px' }}>
           <Input.Wrapper label="From:" size="lg">
             <Input
               style={{ padding: '0 15px' }}
@@ -191,73 +203,91 @@ const AddDirectionPanel = () => {
             }}
           />
         </Stack>
-        <Divider />
       </Container>
+
       <Container>
-        <br />
-        <ul>
+        <Stack spacing="lg" style={{ padding: '20px 0' }}>
+          <Text color="blue.7" weight={500} size={30} align="center">
+            Information Stack 🛣️
+          </Text>
           {infoList.map((info) => (
-            <li key={info.listId}>
+            <div
+              key={info.listId}
+              style={{
+                backgroundColor: '#EDF2FF',
+                padding: '30px 20px',
+                borderRadius: '10px',
+                boxShadow:
+                  'rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
+              }}
+            >
               <Information
                 info={info}
                 updateInfoValues={UpdateInfoValues}
                 deleteInfo={deleteInfo}
               />
-            </li>
+            </div>
           ))}
-        </ul>
+          <Button
+            color={'green.6'}
+            disabled={infoList.length <= 2}
+            onClick={async () => {
+              const dirPost = await addDirectionPost({
+                variables: {
+                  input: {
+                    userId: currentUser.id,
+                    totalFare: infoList
+                      .map((i) => i.fare)
+                      .reduce((a, b) => a + b, 0),
+                    locationA: locationA,
+                    locationB: locationB,
+                    description: description,
+                  },
+                },
+              })
+              await Promise.all(
+                infoList.map((e) => {
+                  addInformation({
+                    variables: {
+                      input: {
+                        directionPostId: dirPost.data.createDirectionPost.id,
+                        listId: e.listId,
+                        title: e.title,
+                        description: e.description,
+                        imageUrl: e.imageUrl,
+                        location: e.location,
+                        fare: e.fare,
+                        mode: e.mode,
+                      },
+                    },
+                  })
+                })
+              )
+              navigate(
+                routes.direction({
+                  id: dirPost.data.createDirectionPost.id,
+                })
+              )
+            }}
+          >
+            SUBMIT
+          </Button>
+        </Stack>
+        <Space h={50} />
+      </Container>
 
-        <button
+      <div style={{ position: 'fixed', bottom: '15px', right: '15px' }}>
+        <Button
+          color={'yellow.6'}
+          leftIcon={<IconPlus />}
+          style={{}}
           onClick={() => {
             AddNewInfo({})
           }}
         >
           Add Information
-        </button>
-
-        <button
-          disabled={infoList.length <= 2}
-          onClick={async () => {
-            const dirPost = await addDirectionPost({
-              variables: {
-                input: {
-                  userId: currentUser.id,
-                  totalFare: infoList
-                    .map((i) => i.fare)
-                    .reduce((a, b) => a + b, 0),
-                  locationA: locationA,
-                  locationB: locationB,
-                  description: description,
-                },
-              },
-            })
-            await Promise.all(
-              infoList.map((e) =>
-                addInformation({
-                  variables: {
-                    input: {
-                      directionPostId: dirPost.data.createDirectionPost.id,
-                      title: e.title,
-                      description: e.description,
-                      imageUrl: e.imageUrl,
-                      location: e.location,
-                      fare: e.fare,
-                      mode: e.mode,
-                    },
-                  },
-                })
-              )
-            )
-            navigate(
-              routes.direction({
-                id: dirPost.data.createDirectionPost.id,
-              })
-            )
-          }}
-        >
-          SUBMIT
-        </button>
-      </Container>
+        </Button>
+      </div>
     </div>
   )
 }

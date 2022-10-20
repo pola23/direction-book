@@ -1,6 +1,7 @@
 export const schema = gql`
   type Information {
     id: Int!
+    listId: Int!
     directionPostId: Int!
     title: String
     description: String
@@ -19,6 +20,7 @@ export const schema = gql`
   input CreateInformationInput {
     directionPostId: Int!
     title: String
+    listId: Int!
     description: String
     imageUrl: String
     location: String

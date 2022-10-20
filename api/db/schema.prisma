@@ -24,6 +24,7 @@ model DirectionPost {
 
 model Information {
   id              Int           @id @default(autoincrement())
+  listId          Int           @default(0)
   directionPostId Int
   title           String?
   description     String?

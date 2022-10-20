@@ -1,5 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
 
+import {
+  Button,
+  Group,
+  Input,
+  NumberInput,
+  Stack,
+  Textarea,
+} from '@mantine/core'
+import { IconSquareX } from '@tabler/icons'
+
 import InformationImageUpload from '../InformationImageUpload/InformationImageUpload'
 type infoType = {
   listId: number
@@ -24,7 +34,7 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
   const [description, setDescription] = useState(info.description)
   const [imageUrl, setImageUrl] = useState(info.imageUrl)
   const [mode, setMode] = useState(info.mode)
-  // const [location, setLocation] = useState(info.location)
+  const [location, setLocation] = useState(info.location)
   const [fare, setFare] = useState(info.fare)
 
   const [isUpload, setIsUpload] = useState(info.isUpload)
@@ -35,7 +45,7 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
       title: title,
       description: description,
       imageUrl: imageUrl,
-      location: info.location,
+      location: location,
       fare: fare,
       mode: mode,
       canBeDeleted: info.canBeDeleted,
@@ -47,7 +57,7 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
     imageUrl,
     info.canBeDeleted,
     info.listId,
-    info.location,
+    location,
     isUpload,
     mode,
     title,
@@ -58,74 +68,87 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
   }, [updateInfoValues, updatedInfo])
 
   return (
-    <div style={{ padding: '1rem' }}>
+    <>
       {info.canBeDeleted ? (
-        <button onClick={() => deleteInfo(info.listId)}>Delete</button>
+        <Group position="right">
+          <Button
+            color={'red.5'}
+            onClick={() => deleteInfo(info.listId)}
+            compact
+          >
+            <IconSquareX />
+          </Button>
+        </Group>
       ) : (
         <></>
       )}
-      <form>
-        <input
-          type="text"
-          id="title"
-          value={title}
-          placeholder="Title"
-          onChange={(e) => {
-            setTitle(e.target.value)
-          }}
-        />
-        <br />
-        <textarea
-          id="description"
-          value={description}
-          placeholder="Description"
-          onChange={(e) => {
-            setDescription(e.target.value)
-          }}
-          cols={40}
-          rows={5}
-        />
-        <br />
-        <input
-          type="text"
-          id="mode"
-          value={mode}
-          placeholder="Mode of Transportation"
-          onChange={(e) => {
-            setMode(e.target.value)
-          }}
-        />
-        <br />
-        <input
-          type="text"
-          id="imageUrl"
-          value={imageUrl}
-          placeholder="Image URL"
-          onChange={(e) => {
-            setImageUrl(e.target.value)
-          }}
-        />
+      <Stack>
+        {/* <Text color="dimmed" size="lg">
+          Given: {info.location}
+        </Text> */}
+        <Input.Wrapper label="Title">
+          <Input
+            id="title"
+            placeholder="what is the information all about?"
+            type="text"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value)
+            }}
+          />
+        </Input.Wrapper>
 
-        <br />
-        <label>Loc: {info.location}</label>
-        <br />
-        <input
-          type="number"
-          id="fare"
-          value={fare}
-          placeholder="Fare Price"
-          onChange={(e) => {
-            setFare(+e.target.value)
-          }}
-        />
-        <br />
+        <Input.Wrapper label="Description">
+          <Textarea
+            id="description"
+            placeholder="tell more about the information ✍️"
+            onChange={(e) => {
+              setDescription(e.target.value)
+            }}
+          />
+        </Input.Wrapper>
+
+        <Input.Wrapper label="Mode of Transportation">
+          <Textarea
+            id="transportation"
+            placeholder="what mode of transportation did you use? (e.g., walk, jeepney, tricycle, ...)"
+            value={mode}
+            onChange={(e) => {
+              setMode(e.target.value)
+            }}
+          />
+        </Input.Wrapper>
+
+        <Input.Wrapper label="Fare (₱)">
+          <NumberInput
+            defaultValue={18}
+            placeholder="how much does it need to go here?"
+            id="fare"
+            value={fare}
+            onChange={(e) => {
+              setFare(e)
+            }}
+          />
+        </Input.Wrapper>
+
+        <Input.Wrapper label="Location">
+          <Input
+            id="location"
+            placeholder="where can this be found?"
+            type="text"
+            value={info.canBeDeleted ? info.location : location}
+            onChange={(e) => {
+              setLocation(e.target.value)
+            }}
+          />
+        </Input.Wrapper>
 
         <InformationImageUpload
           imageState={{ imageUrl, setImageUrl }}
           isUploadState={{ isUpload, setIsUpload }}
         />
-      </form>
-    </div>
+      </Stack>
+    </>
   )
 }
 

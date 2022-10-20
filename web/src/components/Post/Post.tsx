@@ -6,7 +6,6 @@ import {
   Divider,
   Group,
   Menu,
-  Space,
   Text,
 } from '@mantine/core'
 import { IconArrowBigRight, IconDots, IconTrash } from '@tabler/icons'
@@ -61,6 +60,17 @@ const Post = ({
   if (error) return <p>Submission error! ${error.message}</p>
 
   const len = dirPost.informations.length - 2
+
+  const sortedDirPost = [...dirPost.informations].sort((a, b) => {
+    return a.listId - b.listId
+  })
+
+  const adjustedInfoList = [
+    sortedDirPost[0],
+    ...sortedDirPost.slice(2, sortedDirPost.length),
+    sortedDirPost[1],
+  ]
+
   return (
     <>
       <Container
@@ -88,7 +98,6 @@ const Post = ({
                 style={{ border: '1px solid black', margin: 'auto 10px' }}
                 size={30}
                 radius="xl"
-                src="https://res.cloudinary.com/dzmxvq5f5/image/upload/v1665305379/vyh3wc6oroskzmrb0lbh.jpg"
               />
               <Group style={{ display: 'block' }}>
                 <Text
@@ -207,7 +216,7 @@ const Post = ({
               <Container>
                 <Divider style={{ margin: '15px 0' }} />
                 <ul>
-                  {dirPost.informations.map((info) => (
+                  {adjustedInfoList.map((info) => (
                     <li key={info.id}>
                       <PostInformation info={info} />
                     </li>

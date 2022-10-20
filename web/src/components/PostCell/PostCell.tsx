@@ -21,6 +21,7 @@ export const QUERY = gql`
       }
       informations {
         id
+        listId
         title
         description
         imageUrl
