@@ -8,6 +8,8 @@ import {
   Textarea,
   Text,
   Button,
+  Group,
+  Loader,
 } from '@mantine/core'
 import { IconPlus } from '@tabler/icons'
 
@@ -149,11 +151,21 @@ const AddDirectionPanel = () => {
     })
   }, [locationA, locationB])
 
-  if (AddDirectionState.loading) return <>{'Submitting...'}</>
+  if (AddDirectionState.loading)
+    return (
+      <Group position="center" style={{ padding: '50px' }}>
+        <Loader color="indigo" variant="dots" />
+      </Group>
+    )
   if (AddDirectionState.error)
     return <>{`Submission error! ${AddDirectionState.error.message}`}</>
 
-  if (AddInformationState.loading) return <>{'Submitting...'}</>
+  if (AddInformationState.loading)
+    return (
+      <Group position="center" style={{ padding: '50px' }}>
+        <Loader color="indigo" variant="dots" />
+      </Group>
+    )
   if (AddInformationState.error)
     return <>{`Submission error! ${AddInformationState.error.message}`}</>
 

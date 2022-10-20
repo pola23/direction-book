@@ -72,8 +72,6 @@ const Post = ({
     sortedDirPost[1],
   ]
 
-  console.log(adjustedInfoList)
-
   if (loading)
     return (
       <Group position="center" style={{ padding: '50px' }}>
@@ -226,18 +224,21 @@ const Post = ({
                 <Divider style={{ margin: '15px 0' }} />
                 <ul>
                   {adjustedInfoList.map((info) => (
-                    <li key={info.listId}>
+                    <li key={info.id}>
                       <PostInformation info={info} />
                     </li>
                   ))}
                 </ul>
               </Container>
             ) : (
-              <button
+              <Button
+                variant="light"
+                color="indigo"
+                compact
                 onClick={() => navigate(routes.direction({ id: dirPost.id }))}
               >
-                Show Post
-              </button>
+                Show More
+              </Button>
             )}
           </div>
         </Container>

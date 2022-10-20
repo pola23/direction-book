@@ -7,6 +7,7 @@ import {
   NumberInput,
   Stack,
   Textarea,
+  Text,
 } from '@mantine/core'
 import { IconSquareX } from '@tabler/icons'
 
@@ -45,22 +46,23 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
       title: title,
       description: description,
       imageUrl: imageUrl,
-      location: location,
+      location: info.canBeDeleted ? location : info.location,
       fare: fare,
       mode: mode,
       canBeDeleted: info.canBeDeleted,
       isUpload: isUpload,
     }
   }, [
-    description,
-    fare,
-    imageUrl,
-    info.canBeDeleted,
     info.listId,
-    location,
-    isUpload,
-    mode,
+    info.canBeDeleted,
+    info.location,
     title,
+    description,
+    imageUrl,
+    location,
+    fare,
+    mode,
+    isUpload,
   ])
 
   useEffect(() => {
@@ -83,9 +85,6 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
         <></>
       )}
       <Stack>
-        {/* <Text color="dimmed" size="lg">
-          Given: {info.location}
-        </Text> */}
         <Input.Wrapper label="Title">
           <Input
             id="title"
@@ -136,7 +135,8 @@ const Information = ({ info, updateInfoValues, deleteInfo }: propType) => {
             id="location"
             placeholder="where can this be found?"
             type="text"
-            value={info.canBeDeleted ? info.location : location}
+            disabled={!info.canBeDeleted}
+            value={info.canBeDeleted ? location : info.location}
             onChange={(e) => {
               setLocation(e.target.value)
             }}
