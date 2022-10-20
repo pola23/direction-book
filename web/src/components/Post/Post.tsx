@@ -222,13 +222,11 @@ const Post = ({
             {showInfo ? (
               <Container>
                 <Divider style={{ margin: '15px 0' }} />
-                <ul>
-                  {adjustedInfoList.map((info) => (
-                    <li key={info.id}>
-                      <PostInformation info={info} />
-                    </li>
-                  ))}
-                </ul>
+                {adjustedInfoList.map((info) => (
+                  <div key={info.id}>
+                    <PostInformation info={info} />
+                  </div>
+                ))}
               </Container>
             ) : (
               <Button
