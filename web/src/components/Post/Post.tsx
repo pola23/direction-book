@@ -51,7 +51,10 @@ const Post = ({
   ]
   const dateInfo = new Date(dirPost.createdAt)
 
-  const date = `${dateInfo.toLocaleTimeString()} - ${
+  const date = `${dateInfo.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+  })} - ${
     month[dateInfo.getUTCMonth()]
   } ${dateInfo.getUTCDate()}, ${dateInfo.getUTCFullYear()}`
   const [deletePost, { data, loading, error }] = useMutation(DELETE_POST, {
