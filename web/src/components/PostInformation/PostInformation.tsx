@@ -76,7 +76,7 @@ const PostInformation = ({ info }) => {
           <Divider my="xs" label="Fare" variant="dotted" />
           <Container>
             <Text color={'dark.5'} style={{ wordWrap: 'break-word' }}>
-              {info.fare > 0 ? `₱ ${info.mode}` : 'FREE'}
+              {info.fare > 0 ? `₱ ${info.fare}` : 'FREE'}
             </Text>
           </Container>
         </div>
