@@ -17,8 +17,9 @@ export const directionPosts: QueryResolvers['directionPosts'] = async ({
     await db.directionPost.findMany({
       where: {
         userId: id == '' ? undefined : +id,
-        locationA: from == '' ? undefined : { contains: from },
-        locationB: to == '' ? undefined : { contains: to },
+        locationA:
+          from == '' ? undefined : { contains: from, mode: 'insensitive' },
+        locationB: to == '' ? undefined : { contains: to, mode: 'insensitive' },
       },
     })
   ).sort((dA, dB) => Number(dB.createdAt) - Number(dA.createdAt))
