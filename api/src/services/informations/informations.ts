@@ -49,18 +49,18 @@ export const deleteInfromationImage: MutationResolvers['deleteInfromationImage']
   async ({ publicId }) => {
     if (!publicId) return
     const timestamp = new Date().getTime()
-    const string = `public_id=${publicId}&timestamp=${timestamp}${'t9Nrs662f2JfKxiG4RtV4hSNWEo'}`
+    const string = `public_id=${publicId}&timestamp=${timestamp}${'c-Zso3bxNUcL_9LvCYZS-haOdS8'}`
     const signature = await sha1(string)
 
     const formData = new FormData()
     formData.append('public_id', publicId)
-    formData.append('api_key', '462859866789283')
+    formData.append('api_key', '975381628439972')
     formData.append('signature', signature)
     formData.append('timestamp', `${timestamp}`)
 
     let mess = ''
     Axios.post(
-      'https://api.cloudinary.com/v1_1/dzmxvq5f5/image/destroy',
+      'https://api.cloudinary.com/v1_1/dkoxzyqsp/image/destroy',
       formData
     )
       .then(() => {
