@@ -27,10 +27,10 @@ const InformationImageUpload = ({ imageState, isUploadState }) => {
     isUploadState.setIsUpload(true)
     const formData = new FormData()
     formData.append('file', imageSelected)
-    formData.append('upload_preset', 'amz64zyn')
+    formData.append('upload_preset', 'uw1xkmoy')
 
     Axios.post(
-      'https://api.cloudinary.com/v1_1/dzmxvq5f5/image/upload',
+      'https://api.cloudinary.com/v1_1/dkoxzyqsp/image/upload',
       formData
     )
       .then((res) => {
